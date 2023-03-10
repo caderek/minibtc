@@ -1,0 +1,37 @@
+body,
+html {
+  height: 100%;
+}
+
+body {
+  font-family: Ubuntu, system-ui, sans-serif;
+  display: grid;
+  place-content: center;
+  background-color: #141523;
+}
+
+h1,
+p {
+  text-align: center;
+  color: #ddd;
+}
+
+h1 {
+  font-weight: normal;
+  margin: 1em;
+}
+
+p {
+  font-family: "Ubuntu Mono", ui-monospace, monospace;
+  font-size: min(10rem, 12vw);
+  text-shadow: 0 0 1rem #00000088;
+  margin: 0.25em;
+}
+
+.buy {
+  color: rgb(0, 148, 128);
+}
+
+.sell {
+  color: rgb(255, 24, 101);
+}
