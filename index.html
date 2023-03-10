@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BTC-USD</title>
+    <style>
+      body,
+      html {
+        height: 100%;
+      }
+
+      body {
+        display: grid;
+        place-content: center;
+        font-family: system-ui;
+        background-color: #141523;
+      }
+
+      h1,
+      p {
+        text-align: center;
+        color: #ddd;
+      }
+
+      h1 {
+        font-weight: normal;
+        margin: 2rem;
+      }
+
+      p {
+        font-size: min(10rem, 12vw);
+        text-shadow: 0 0 1rem #00000088;
+        margin: 2rem;
+      }
+
+      .buy {
+        color: rgb(0, 148, 128);
+      }
+
+      .sell {
+        color: rgb(255, 24, 101);
+      }
+    </style>
+  </head>
+  <body>
+    <h1>BTC PRICE</h1>
+    <p class="price">$0</p>
+    <script>
+      const $price = document.querySelector(".price");
+      let prevPrice = 0;
+
+      const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+      const watch = () => {
+        const socket = new WebSocket("wss://ws-feed.pro.coinbase.com/");
+
+        socket.addEventListener("open", (event) => {
+          socket.send(
+            JSON.stringify({
+              type: "subscribe",
+              channels: [{ name: "ticker_1000", product_ids: ["BTC-USD"] }],
+            })
+          );
+        });
+
+        socket.addEventListener("close", async () => {
+          await delay(1000);
+          watch();
+        });
+
+        socket.addEventListener("message", (event) => {
+          const data = JSON.parse(event.data);
+          const price = Number(data.price);
+
+          const formattedPrice = new Intl.NumberFormat("en-US", {
+            style: "currency",
+            currency: "USD",
+          }).format(data.price);
+
+          $price.innerText = formattedPrice;
+
+          let arrow = "";
+
+          if (prevPrice !== 0) {
+            if (price < prevPrice) {
+              $price.classList.add("sell");
+              $price.classList.remove("buy");
+              arrow = "↘";
+            } else {
+              $price.classList.add("buy");
+              $price.classList.remove("sell");
+              arrow = "↗";
+            }
+          }
+
+          document.title = `BTC: ${formattedPrice} ${arrow}`;
+
+          prevPrice = price;
+        });
+      };
+
+      watch();
+    </script>
+  </body>
+</html>
