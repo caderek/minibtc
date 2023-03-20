@@ -15,25 +15,25 @@ h2,
 p {
   text-align: center;
   color: rgb(163, 146, 172);
-  margin: 1rem;
+  margin: 1rem 0;
 }
 
 h1 {
-  font-size: 3rem;
+  font-size: min(3rem, 6vw);
   font-weight: normal;
 }
 
 p {
   font-family: "Ubuntu Mono", ui-monospace, monospace;
-  margin: 0.25em;
 }
 
 p#price {
   font-size: min(10rem, 12vw);
+  margin: min(3rem, 4vw) 0;
 }
 
 p.last24h {
-  font-size: min(4rem, 12vw);
+  font-size: min(4rem, 7vw);
 }
 
 .up {
