@@ -11,26 +11,35 @@ body {
 }
 
 h1,
+h2,
 p {
   text-align: center;
-  color: #ddd;
+  color: rgb(163, 146, 172);
+  margin: 1rem;
 }
 
 h1 {
+  font-size: 3rem;
   font-weight: normal;
-  margin: 1em;
 }
 
 p {
   font-family: "Ubuntu Mono", ui-monospace, monospace;
-  font-size: min(10rem, 12vw);
   margin: 0.25em;
 }
 
-.buy {
+p#price {
+  font-size: min(10rem, 12vw);
+}
+
+p.last24h {
+  font-size: min(4rem, 12vw);
+}
+
+.up {
   color: rgb(0, 148, 128);
 }
 
-.sell {
-  color: rgb(255, 24, 101);
+.down {
+  color: rgb(190, 35, 87);
 }

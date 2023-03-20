@@ -1,7 +1,10 @@
 /**@type {HTMLParagraphElement | null} */
-const $price = document.querySelector(".price");
+const $price = document.querySelector("#price");
+/**@type {HTMLParagraphElement | null} */
+const $last24h = document.querySelector("#last24h");
 
 let prevPrice = 0;
+let open24h = 0;
 
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -11,8 +14,22 @@ const formatPrice = (price) =>
     currency: "USD",
   }).format(price);
 
+const formatPercentageChange = (startPrice, currentPrice) => {
+  const priceChange = Number((currentPrice / startPrice - 1).toPrecision(2));
+  const sign = priceChange > 0 ? "+" : "";
+
+  return (
+    sign +
+    new Intl.NumberFormat("en-US", {
+      style: "percent",
+      currency: "USD",
+      minimumFractionDigits: 2,
+    }).format(priceChange)
+  );
+};
+
 const watch = () => {
-  if (!$price) {
+  if (!$price || !$last24h) {
     return;
   }
 
@@ -51,7 +68,12 @@ const watch = () => {
 
     switch (data.type) {
       case "ticker": {
-        document.title = `BTC: ${formattedPrice}`;
+        open24h = Number(data.open_24h);
+
+        document.title = `BTC: ${formattedPrice} | ${formatPercentageChange(
+          open24h,
+          price
+        )}`;
 
         break;
       }
@@ -61,13 +83,15 @@ const watch = () => {
         $price.innerText = formattedPrice;
 
         if (prevPrice !== 0) {
-          if (price < prevPrice) {
-            $price.classList.add("sell");
-            $price.classList.remove("buy");
-          } else {
-            $price.classList.add("buy");
-            $price.classList.remove("sell");
-          }
+          $price.className = price < prevPrice ? "down" : "up";
+
+          const change = formatPercentageChange(open24h, price);
+          $last24h.innerText = change;
+          $last24h.className = change.startsWith("-")
+            ? "down"
+            : change.startsWith("+")
+            ? "up"
+            : "";
         }
 
         prevPrice = price;
