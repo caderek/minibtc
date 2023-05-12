@@ -1,0 +1,24 @@
+{
+  "dir": "ltr",
+  "lang": "en",
+  "name": "MiniBTC",
+  "short_name": "MiniBTC",
+  "scope": "/",
+  "display": "fullscreen",
+  "url": "https://minibtc.netlify.app/",
+  "start_url": "https://minibtc.netlify.app/",
+  "theme_color": "#009480",
+  "description": "Minimalistic Bitcoin dashboard",
+  "orientation": "portrait",
+  "background_color": "#0c0c14",
+  "related_applications": [],
+  "prefer_related_applications": false,
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "type": "image/svg+xml"
+    }
+  ],
+  "screenshots": [],
+  "shortcuts": []
+}
