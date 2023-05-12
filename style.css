@@ -117,7 +117,8 @@ p.last24h {
 .fees h3 {
   color: var(--color-text-accent);
   font-weight: normal;
-  font-size: 0.875rem;
+  font-size: 1rem;
+  line-height: 120%;
 }
 
 .fees p:last-child {
