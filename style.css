@@ -104,6 +104,10 @@ p.last24h {
   font-size: 0.875rem;
 }
 
+.fees p span {
+  font-weight: bold;
+}
+
 .mempool p {
   font-size: 1.5rem;
 }
