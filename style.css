@@ -104,7 +104,7 @@ p.last24h {
   font-size: 0.875rem;
 }
 
-.fees p span {
+.fees p:last-child {
   font-weight: bold;
 }
 
