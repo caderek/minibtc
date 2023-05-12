@@ -128,16 +128,16 @@ const watch = () => {
           price
         )}`;
 
-        $feeLowUSD.innerText = getAverageTXCost(mempool.fees.low, price);
-        $feeMidUSD.innerText = getAverageTXCost(mempool.fees.mid, price);
-        $feeHighUSD.innerText = getAverageTXCost(mempool.fees.high, price);
-
         break;
       }
 
       case "match":
       case "last_match": {
         $price.innerText = formattedPrice;
+
+        $feeLowUSD.innerText = getAverageTXCost(mempool.fees.low, price);
+        $feeMidUSD.innerText = getAverageTXCost(mempool.fees.mid, price);
+        $feeHighUSD.innerText = getAverageTXCost(mempool.fees.high, price);
 
         if (prevPrice !== 0) {
           $price.className = price < prevPrice ? "down" : "up";
