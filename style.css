@@ -106,4 +106,8 @@ p.last24h {
   .mempool p {
     font-size: 0.875rem;
   }
+
+  .price {
+    padding: 1.5rem;
+  }
 }
