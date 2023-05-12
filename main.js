@@ -60,7 +60,7 @@ const watchMempool = async () => {
       ? "mid"
       : "high";
 
-  setTimeout(watchMempool, 10000);
+  setTimeout(watchMempool, 5000);
 };
 
 watchMempool();
