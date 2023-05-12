@@ -97,3 +97,13 @@ p.last24h {
   background-color: #141523;
   padding: 1rem;
 }
+
+@media (max-width: 512px) {
+  .fees li {
+    font-size: 0.875rem;
+  }
+
+  .mempool p {
+    font-size: 0.875rem;
+  }
+}
