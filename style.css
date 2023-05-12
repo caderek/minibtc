@@ -128,9 +128,17 @@ p.last24h {
   font-size: 1.5rem;
 }
 
+.fee-usd {
+  font-size: 1.5rem;
+}
+
 @media (max-width: 512px) {
   .fees li {
     font-size: 0.875rem;
+  }
+
+  .fees h3 {
+    font-size: 0.75rem;
   }
 
   .mempool p {
