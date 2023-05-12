@@ -47,7 +47,7 @@ p.last24h {
 }
 
 .down {
-  color: rgb(190, 35, 87);
+  color: rgb(209, 55, 106);
 }
 
 .low {
@@ -59,7 +59,7 @@ p.last24h {
 }
 
 .high {
-  color: rgb(190, 35, 87);
+  color: rgb(209, 55, 106);
 }
 
 .mempool,
