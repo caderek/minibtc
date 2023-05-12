@@ -149,4 +149,8 @@ p.last24h {
   .price {
     padding: 1.5rem;
   }
+
+  .fee-usd {
+    font-size: 1.25rem;
+  }
 }
