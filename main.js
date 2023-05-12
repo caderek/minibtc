@@ -1,18 +1,64 @@
-/**@type {HTMLParagraphElement | null} */
+// @ts-nocheck
 const $price = document.querySelector("#price");
-/**@type {HTMLParagraphElement | null} */
 const $last24h = document.querySelector("#last24h");
+const $feeLow = document.querySelector("#fee-low");
+const $feeMid = document.querySelector("#fee-mid");
+const $feeHigh = document.querySelector("#fee-high");
+const $feeLowUSD = document.querySelector("#fee-low-usd");
+const $feeMidUSD = document.querySelector("#fee-mid-usd");
+const $feeHighUSD = document.querySelector("#fee-high-usd");
+const $unconfirmed = document.querySelector("#unconfirmed");
 
+const averageTXSize = 140; // vB
 let prevPrice = 0;
 let open24h = 0;
 
-const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+const mempool = {
+  fees: {
+    low: 0,
+    mid: 0,
+    high: 0,
+  },
+  unconfirmed: 0,
+};
 
 const formatPrice = (price) =>
   new Intl.NumberFormat("en-US", {
     style: "currency",
     currency: "USD",
   }).format(price);
+
+const formatNum = (price) => new Intl.NumberFormat("en-US").format(price);
+
+const getAverageTXCost = (satPerVB, price) =>
+  formatPrice(satPerVB * averageTXSize * (price / 1e8));
+
+const watchMempool = async () => {
+  const fees = await fetch(
+    "https://mempool.space/api/v1/fees/recommended"
+  ).then((res) => res.json());
+
+  mempool.fees.low = fees.hourFee;
+  mempool.fees.mid = fees.halfHourFee;
+  mempool.fees.high = fees.fastestFee;
+
+  const unconfirmed = await fetch("https://mempool.space/api/mempool").then(
+    (res) => res.json()
+  );
+
+  mempool.unconfirmed = unconfirmed.count;
+
+  $feeLow.innerText = mempool.fees.low;
+  $feeMid.innerText = mempool.fees.mid;
+  $feeHigh.innerText = mempool.fees.high;
+  $unconfirmed.innerText = formatNum(mempool.unconfirmed);
+
+  setTimeout(watchMempool, 10000);
+};
+
+watchMempool();
+
+const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 const formatPercentageChange = (startPrice, currentPrice) => {
   const priceChange = Number((currentPrice / startPrice - 1).toPrecision(2));
@@ -74,6 +120,10 @@ const watch = () => {
           open24h,
           price
         )}`;
+
+        $feeLowUSD.innerText = getAverageTXCost(mempool.fees.low, price);
+        $feeMidUSD.innerText = getAverageTXCost(mempool.fees.mid, price);
+        $feeHighUSD.innerText = getAverageTXCost(mempool.fees.high, price);
 
         break;
       }

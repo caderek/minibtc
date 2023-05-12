@@ -9,8 +9,35 @@
     <script src="main.js" type="module" defer></script>
   </head>
   <body>
-    <h1>BTC PRICE</h1>
-    <p id="price">loading...</p>
-    <p class="last24h">Last 24h: <span id="last24h">-</span></p>
+
+    <section class="price">
+      <h2>BTC PRICE</h2>
+      <p id="price">loading...</p>
+      <p class="last24h">Last 24h: <span id="last24h">-</span></p>
+    </section>
+
+    <section class="fees">
+      <h2>FEES</h2>
+      <ul>
+        <li>
+          Low priority: 
+          <p><span id="fee-low">-</span> sat/vB</p>
+          <p id="fee-low-usd">-</p>
+        </li>
+        <li>
+          Medium priority: 
+          <p><span id="fee-mid">-</span> sat/vB</p>
+          <p id="fee-mid-usd">-</p>
+        </li>
+        <li>
+          High priority: 
+          <p><span id="fee-high">-</span> sat/vB</p>
+          <p id="fee-high-usd">-</p>
+        </li>
+      </ul>
+    </section>
+    <section class="mempool">
+      <h2>MEMPOOL</h2>
+      <p>Unconfirmed transactions: <strong id="unconfirmed">-</strong></p>
   </body>
 </html>

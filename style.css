@@ -1,3 +1,9 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 body,
 html {
   height: 100%;
@@ -42,4 +48,52 @@ p.last24h {
 
 .down {
   color: rgb(190, 35, 87);
+}
+
+.mempool,
+.fees,
+.price {
+  border: solid 2px #242438;
+  color: rgb(163, 146, 172);
+  margin: 2rem 0.5rem 1rem;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  position: relative;
+}
+
+.price {
+  padding: 3rem;
+}
+
+.fees ul {
+  font-family: "Ubuntu Mono", ui-monospace, monospace;
+  list-style: none;
+  text-align: center;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  justify-content: justify;
+}
+
+.fees li {
+  display: block;
+  padding: 0.5rem;
+}
+
+.fees li p {
+  margin-top: 1rem;
+  margin-bottom: 0;
+}
+
+.mempool h2,
+.fees h2,
+.price h2 {
+  font-weight: normal;
+  font-size: 1rem;
+  margin: 0;
+  position: absolute;
+  top: calc(-0.5em - 1rem);
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #141523;
+  padding: 1rem;
 }
