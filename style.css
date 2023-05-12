@@ -1,3 +1,13 @@
+:root {
+  --color-bg: #0c0c14;
+  --color-borders: #1b1b2b;
+  --color-text: rgb(163, 146, 172);
+  --color-text-accent: rgb(85, 167, 214);
+  --color-good: rgb(0, 148, 128);
+  --color-mid: rgb(207, 114, 27);
+  --color-bad: rgb(230, 57, 115);
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -13,14 +23,14 @@ body {
   font-family: Ubuntu, system-ui, sans-serif;
   display: grid;
   place-content: center;
-  background-color: #0c0c14;
+  background-color: var(--color-bg);
 }
 
 h1,
 h2,
 p {
   text-align: center;
-  color: rgb(163, 146, 172);
+  color: var(--color-text);
   margin: 1rem 0;
 }
 
@@ -42,31 +52,25 @@ p.last24h {
   font-size: min(4rem, 7vw);
 }
 
-.up {
-  color: rgb(0, 148, 128);
-}
-
-.down {
-  color: rgb(209, 55, 106);
-}
-
+.up,
 .low {
-  color: rgb(0, 148, 128);
+  color: var(--color-good);
+}
+
+.down,
+.high {
+  color: var(--color-bad);
 }
 
 .mid {
-  color: rgb(207, 114, 27);
-}
-
-.high {
-  color: rgb(209, 55, 106);
+  color: var(--color-mid);
 }
 
 .mempool,
 .fees,
 .price {
-  border: solid 2px #1b1b2b;
-  color: rgb(163, 146, 172);
+  border: solid 2px var(--color-borders);
+  color: var(--color-text);
   margin: 2rem 0.5rem 1rem;
   border-radius: 0.5rem;
   padding: 1rem;
@@ -106,12 +110,12 @@ p.last24h {
   top: calc(-0.5em);
   left: 50%;
   transform: translateX(-50%);
-  background-color: #0c0c14;
+  background-color: var(--color-bg);
   padding: 0 1rem;
 }
 
 .fees h3 {
-  color: rgb(85, 167, 214);
+  color: var(--color-text-accent);
   font-weight: normal;
   font-size: 0.875rem;
 }
