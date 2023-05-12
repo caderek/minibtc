@@ -1,4 +1,7 @@
 // @ts-nocheck
+
+import "https://cdn.skypack.dev/@khmyznikov/pwa-install";
+
 const $price = document.querySelector("#price");
 const $last24h = document.querySelector("#last24h");
 const $feeLow = document.querySelector("#fee-low");
