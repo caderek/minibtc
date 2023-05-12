@@ -26,6 +26,14 @@ body {
   background-color: var(--color-bg);
 }
 
+main {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-areas: "price price" "fees mempool";
+  gap: 2rem;
+  margin: 0.5rem;
+}
+
 h1,
 h2,
 p {
@@ -71,7 +79,6 @@ p.last24h {
 .price {
   border: solid 2px var(--color-borders);
   color: var(--color-text);
-  margin: 2rem 0.5rem 1rem;
   border-radius: 0.5rem;
   padding: 1rem;
   position: relative;
@@ -79,6 +86,19 @@ p.last24h {
 
 .price {
   padding: 3rem;
+  grid-area: price;
+  display: grid;
+  place-content: center;
+}
+
+.fees {
+  grid-area: fees;
+}
+
+.mempool {
+  grid-area: mempool;
+  display: grid;
+  place-content: center;
 }
 
 .fees ul {
@@ -126,7 +146,7 @@ p.last24h {
 }
 
 .mempool p {
-  font-size: 1.5rem;
+  font-size: 1.25rem;
 }
 
 .fee-usd {
@@ -154,9 +174,30 @@ p.last24h {
     font-size: 1.25rem;
   }
 
-  .mempool,
-  .fees,
-  .price {
-    margin: 1rem 0.5rem;
+  main {
+    gap: 2rem;
+  }
+}
+
+@media (orientation: portrait) {
+  main {
+    grid-template-columns: 1fr;
+    grid-template-areas: "price" "fees" "mempool";
+  }
+}
+
+@media (orientation: landscape) and (max-height: 720px) {
+  main {
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas: "price fees" "price mempool";
+    gap: 1.25rem;
+  }
+
+  p#price {
+    font-size: 7vw;
+  }
+
+  p.last24h {
+    font-size: 4vw;
   }
 }
