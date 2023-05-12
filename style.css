@@ -13,7 +13,7 @@ body {
   font-family: Ubuntu, system-ui, sans-serif;
   display: grid;
   place-content: center;
-  background-color: #141523;
+  background-color: #0c0c14;
 }
 
 h1,
@@ -65,7 +65,7 @@ p.last24h {
 .mempool,
 .fees,
 .price {
-  border: solid 2px #242438;
+  border: solid 2px #1b1b2b;
   color: rgb(163, 146, 172);
   margin: 2rem 0.5rem 1rem;
   border-radius: 0.5rem;
@@ -103,11 +103,11 @@ p.last24h {
   font-size: 1rem;
   margin: 0;
   position: absolute;
-  top: calc(-0.5em - 1rem);
+  top: calc(-0.5em);
   left: 50%;
   transform: translateX(-50%);
-  background-color: #141523;
-  padding: 1rem;
+  background-color: #0c0c14;
+  padding: 0 1rem;
 }
 
 .fees h3 {
