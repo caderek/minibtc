@@ -50,6 +50,18 @@ p.last24h {
   color: rgb(190, 35, 87);
 }
 
+.low {
+  color: rgb(0, 148, 128);
+}
+
+.mid {
+  color: rgb(207, 114, 27);
+}
+
+.high {
+  color: rgb(190, 35, 87);
+}
+
 .mempool,
 .fees,
 .price {

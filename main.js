@@ -53,6 +53,13 @@ const watchMempool = async () => {
   $feeHigh.innerText = mempool.fees.high;
   $unconfirmed.innerText = formatNum(mempool.unconfirmed);
 
+  $unconfirmed.className =
+    mempool.unconfirmed < 1e4
+      ? "low"
+      : mempool.unconfirmed < 1e5
+      ? "mid"
+      : "high";
+
   setTimeout(watchMempool, 10000);
 };
 
