@@ -153,4 +153,10 @@ p.last24h {
   .fee-usd {
     font-size: 1.25rem;
   }
+
+  .mempool,
+  .fees,
+  .price {
+    margin: 1rem 0.5rem;
+  }
 }
