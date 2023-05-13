@@ -1,18 +1,17 @@
-// @ts-nocheck
+import "./style.css";
+import { formatBytes, formatNum, formatPrice } from "./formatters";
 
-import "https://cdn.skypack.dev/@khmyznikov/pwa-install";
-
-const $price = document.querySelector("#price");
-const $last24h = document.querySelector("#last24h");
-const $feeLow = document.querySelector("#fee-low");
-const $feeMid = document.querySelector("#fee-mid");
-const $feeHigh = document.querySelector("#fee-high");
-const $feeLowUSD = document.querySelector("#fee-low-usd");
-const $feeMidUSD = document.querySelector("#fee-mid-usd");
-const $feeHighUSD = document.querySelector("#fee-high-usd");
-const $unconfirmed = document.querySelector("#unconfirmed");
-const $incoming = document.querySelector("#incoming");
-const $memory = document.querySelector("#memory");
+const $price = document.querySelector("#price") as HTMLElement;
+const $last24h = document.querySelector("#last24h") as HTMLElement;
+const $feeLow = document.querySelector("#fee-low") as HTMLElement;
+const $feeMid = document.querySelector("#fee-mid") as HTMLElement;
+const $feeHigh = document.querySelector("#fee-high") as HTMLElement;
+const $feeLowUSD = document.querySelector("#fee-low-usd") as HTMLElement;
+const $feeMidUSD = document.querySelector("#fee-mid-usd") as HTMLElement;
+const $feeHighUSD = document.querySelector("#fee-high-usd") as HTMLElement;
+const $unconfirmed = document.querySelector("#unconfirmed") as HTMLElement;
+const $incoming = document.querySelector("#incoming") as HTMLElement;
+const $memory = document.querySelector("#memory") as HTMLElement;
 
 const AVERAGE_TX_SIZE = 140; // vB
 const OPTIMAL_INCOMING = 1670; // vB/s
@@ -23,53 +22,21 @@ let open24h = 0;
 
 const mempool = {
   fees: {
-    low: null,
-    mid: null,
-    high: null,
+    low: -1,
+    mid: -1,
+    high: -1,
   },
-  unconfirmed: null,
-  incoming: null,
-  memory: null,
+  unconfirmed: 0,
+  incoming: 0,
+  memory: 0,
 };
 
-const formatPrice = (price, showCents = true) =>
-  new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD",
-    maximumFractionDigits: showCents ? 2 : 0,
-  }).format(price);
+const getAverageTXCost = (satPerVB: number, price: number) =>
+  satPerVB < 0 ? "-" : formatPrice(satPerVB * AVERAGE_TX_SIZE * (price / 1e8));
 
-const formatNum = (price) => new Intl.NumberFormat("en-US").format(price);
+const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
-const formatBytes = (bytes) => {
-  if (bytes / 1e9 >= 1) {
-    const formatted = new Intl.NumberFormat("en-US", {
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2,
-    }).format(bytes / 1e9);
-
-    return `${formatted} GB`;
-  }
-
-  if (bytes / 1e6 >= 1) {
-    return `${Math.round(bytes / 1e6)} MB`;
-  }
-
-  if (bytes / 1e3 >= 1) {
-    return `${Math.round(bytes / 1e3)} kB`;
-  }
-
-  return `${bytes} B`;
-};
-
-const getAverageTXCost = (satPerVB, price) =>
-  satPerVB === null
-    ? "-"
-    : formatPrice(satPerVB * AVERAGE_TX_SIZE * (price / 1e8));
-
-const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-
-const formatPercentageChange = (startPrice, currentPrice) => {
+const formatPercentageChange = (startPrice: number, currentPrice: number) => {
   const priceChange = Number((currentPrice / startPrice - 1).toPrecision(2));
   const sign = priceChange > 0 ? "+" : "";
 
@@ -86,11 +53,11 @@ const formatPercentageChange = (startPrice, currentPrice) => {
 const watchMempool = () => {
   const socket = new WebSocket("wss://mempool.space/api/v1/ws");
 
-  socket.addEventListener("open", (event) => {
+  socket.addEventListener("open", () => {
     socket.send(JSON.stringify({ action: "init" }));
   });
 
-  socket.addEventListener("open", (event) => {
+  socket.addEventListener("open", () => {
     socket.send(
       JSON.stringify({
         action: "want",
@@ -132,9 +99,9 @@ const watchMempool = () => {
       mempool.fees.mid = data.fees.halfHourFee;
       mempool.fees.high = data.fees.fastestFee;
 
-      $feeLow.innerText = mempool.fees.low;
-      $feeMid.innerText = mempool.fees.mid;
-      $feeHigh.innerText = mempool.fees.high;
+      $feeLow.innerText = String(mempool.fees.low);
+      $feeMid.innerText = String(mempool.fees.mid);
+      $feeHigh.innerText = String(mempool.fees.high);
     }
 
     if (data.vBytesPerSecond || data["live-2h-chart"]?.vbytes_per_second) {
@@ -168,7 +135,7 @@ const watchPrice = () => {
 
   const socket = new WebSocket("wss://ws-feed.pro.coinbase.com/");
 
-  socket.addEventListener("open", (event) => {
+  socket.addEventListener("open", () => {
     socket.send(
       JSON.stringify({
         type: "subscribe",
@@ -241,7 +208,7 @@ if (localStorage.getItem("mode") === "light") {
   document.body.classList.toggle("light");
 }
 
-document.getElementById("mode").addEventListener("click", () => {
+document.getElementById("mode")!.addEventListener("click", () => {
   document.body.classList.toggle("light");
   localStorage.setItem(
     "mode",
@@ -252,9 +219,12 @@ document.getElementById("mode").addEventListener("click", () => {
 document.addEventListener("keydown", (e) => {
   if (e.key === "F11") {
     e.preventDefault();
-    document.querySelector(".box").requestFullscreen();
+    document.querySelector(".box")!.requestFullscreen();
   }
 });
 
 watchMempool();
 watchPrice();
+
+// @ts-ignore
+import("@khmyznikov/pwa-install");
