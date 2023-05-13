@@ -141,7 +141,7 @@ const watchMempool = () => {
       const vBytes =
         data.vBytesPerSecond ?? data["live-2h-chart"].vbytes_per_second;
       mempool.incoming = vBytes;
-      $incoming.innerText = formatNum(mempool.incoming) + " vB/s";
+      $incoming.innerText = formatNum(mempool.incoming);
 
       $incoming.className =
         mempool.incoming < OPTIMAL_INCOMING
