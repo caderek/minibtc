@@ -7,7 +7,7 @@
   "display": "fullscreen",
   "url": "https://minibtc.netlify.app/",
   "start_url": "https://minibtc.netlify.app/",
-  "description": "Minimalistic Bitcoin dashboard",
+  "description": "Minimalistic Bitcoin Dashboard",
   "orientation": "any",
   "theme_color": "transparent",
   "background_color": "transparent",
