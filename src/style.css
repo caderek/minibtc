@@ -14,9 +14,9 @@
   --color-bg-header: #d1d1ff;
   --color-borders: #a5a5dd;
   --color-text: rgb(44, 35, 49);
-  --color-text-accent: rgb(3, 46, 2);
+  --color-text-accent: rgb(38, 0, 100);
   --color-good: rgb(0, 95, 82);
-  --color-mid: rgb(143, 57, 0);
+  --color-mid: rgb(211, 67, 0);
   --color-bad: rgb(184, 3, 63);
 }
 
@@ -223,6 +223,14 @@ p.last24h {
 
 .fee-usd {
   font-size: 1.5rem;
+}
+
+.fee-sat {
+  font-size: 0.75rem;
+}
+
+.fee-sat strong {
+  font-size: 1rem;
 }
 
 @media (max-width: 512px) {
