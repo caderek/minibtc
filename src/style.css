@@ -57,7 +57,7 @@ h1 {
   color: var(--color-good);
   padding: 1rem;
   display: inline-block;
-  background-image: url(logo.svg);
+  background-image: url(/logo.svg);
   background-size: 2rem;
   background-position: 0.5rem center;
   background-repeat: no-repeat;
@@ -65,7 +65,7 @@ h1 {
 }
 
 .light h1 {
-  background-image: url(logo-light.svg);
+  background-image: url(/logo-light.svg);
 }
 
 button.mode {
@@ -77,13 +77,13 @@ button.mode {
   right: 0.75rem;
   cursor: pointer;
   background-color: transparent;
-  background-image: url(mode-light.svg);
+  background-image: url(/mode-light.svg);
   background-size: contain;
   opacity: 0.7;
 }
 
 .light button.mode {
-  background-image: url(mode-dark.svg);
+  background-image: url(/mode-dark.svg);
   opacity: 0.9;
 }
 
