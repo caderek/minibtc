@@ -215,7 +215,7 @@ p.last24h {
 .mempool p {
   text-align: left;
   font-size: 1rem;
-  margin: 0.25rem 0;
+  margin: 0.5rem 0;
 }
 
 .fee-usd {
@@ -262,6 +262,10 @@ p.last24h {
 
   p.last24h {
     margin-bottom: 0;
+  }
+
+  .mempool p {
+    margin: 0.25rem 0;
   }
 }
 
