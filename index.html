@@ -36,44 +36,50 @@
       view the content.
     </noscript>
 
-    <h1>MiniBTC - Minimalistic Bitcoin Dashboard</h1>
-    <button id="mode" class="mode" title="Toggle dark mode"></button>
+    <header>
+      <a href="/">
+        <h1>MiniBTC</h1>
+      </a>
+      <button id="mode" class="mode" title="Toggle dark mode"></button>
+    </header>
 
-    <main>
-      <section class="price">
-        <h2>BTC PRICE</h2>
-        <div>
-          <p id="price">loading...</p>
-          <p class="last24h">Last 24h: <span id="last24h">-</span></p>
-        </div>
-      </section>
+    <div class="box">
+      <main>
+        <section class="price">
+          <h2>BTC PRICE</h2>
+          <div>
+            <p id="price">loading...</p>
+            <p class="last24h">Last 24h: <span id="last24h">-</span></p>
+          </div>
+        </section>
 
-      <section class="fees">
-        <h2>FEES</h2>
-        <ul>
-          <li>
-            <h3>Low<br />priority</h3>
-            <p><span id="fee-low">-</span> sat/vB</p>
-            <p class="fee-usd" id="fee-low-usd">-</p>
-          </li>
-          <li>
-            <h3>Medium<br />priority</h3>
-            <p><span id="fee-mid">-</span> sat/vB</p>
-            <p class="fee-usd" id="fee-mid-usd">-</p>
-          </li>
-          <li>
-            <h3>High<br />priority</h3>
-            <p><span id="fee-high">-</span> sat/vB</p>
-            <p class="fee-usd" id="fee-high-usd">-</p>
-          </li>
-        </ul>
-      </section>
+        <section class="fees">
+          <h2>FEES</h2>
+          <ul>
+            <li>
+              <h3>Low<br />priority</h3>
+              <p><span id="fee-low">-</span> sat/vB</p>
+              <p class="fee-usd" id="fee-low-usd">-</p>
+            </li>
+            <li>
+              <h3>Medium<br />priority</h3>
+              <p><span id="fee-mid">-</span> sat/vB</p>
+              <p class="fee-usd" id="fee-mid-usd">-</p>
+            </li>
+            <li>
+              <h3>High<br />priority</h3>
+              <p><span id="fee-high">-</span> sat/vB</p>
+              <p class="fee-usd" id="fee-high-usd">-</p>
+            </li>
+          </ul>
+        </section>
 
-      <section class="mempool">
-        <h2>MEMPOOL</h2>
-        <p>Unconfirmed transactions: <strong id="unconfirmed">-</strong></p>
-      </section>
-    </main>
+        <section class="mempool">
+          <h2>MEMPOOL</h2>
+          <p>Unconfirmed transactions: <strong id="unconfirmed">-</strong></p>
+        </section>
+      </main>
+    </div>
     <pwa-install icon="/icon.png"></pwa-install>
   </body>
 </html>
