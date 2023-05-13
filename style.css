@@ -214,7 +214,7 @@ p.last24h {
   }
 
   main {
-    gap: 2rem;
+    gap: 1.5rem;
   }
 
   button.mode {
@@ -235,6 +235,38 @@ p.last24h {
     grid-template-columns: 1fr 1fr;
     grid-template-areas: "price fees" "price mempool";
     gap: 1.25rem;
+  }
+
+  p#price {
+    font-size: 7vw;
+  }
+
+  p.last24h {
+    font-size: 4vw;
+  }
+
+  button.mode {
+    width: 24px;
+    height: 24px;
+  }
+}
+
+@media (orientation: landscape) and (max-height: 512px) {
+  body {
+    display: block;
+  }
+
+  .price {
+    margin-top: 3rem;
+  }
+
+  .mempool {
+    margin-bottom: 2rem;
+  }
+
+  main {
+    grid-template-columns: 1fr;
+    grid-template-areas: "price" "fees" "mempool";
   }
 
   p#price {
