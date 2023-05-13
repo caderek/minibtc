@@ -255,6 +255,16 @@ p.last24h {
   }
 }
 
+@media (orientation: portrait) and (max-height: 720px) {
+  p#price {
+    margin: 0;
+  }
+
+  p.last24h {
+    margin-bottom: 0;
+  }
+}
+
 @media (orientation: landscape) and (max-height: 720px) {
   main {
     grid-template-columns: 1fr 1fr;
