@@ -96,6 +96,7 @@ button.mode:hover {
   display: grid;
   place-content: center;
   height: calc(100% - 3rem);
+  background-color: var(--color-bg);
 }
 
 main {

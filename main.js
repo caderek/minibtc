@@ -173,4 +173,11 @@ document.getElementById("mode").addEventListener("click", () => {
   );
 });
 
+document.addEventListener("keydown", (e) => {
+  if (e.key === "F11") {
+    e.preventDefault();
+    document.querySelector(".box").requestFullscreen();
+  }
+});
+
 watch();
