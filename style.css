@@ -10,9 +10,9 @@
 }
 
 .light {
-  --color-bg: #c3c3ec;
-  --color-bg-header: #b1b1da;
-  --color-borders: #9595cc;
+  --color-bg: #ebebff;
+  --color-bg-header: #d1d1ff;
+  --color-borders: #a5a5dd;
   --color-text: rgb(44, 35, 49);
   --color-text-accent: rgb(3, 46, 2);
   --color-good: rgb(0, 95, 82);
@@ -213,9 +213,12 @@ p.last24h {
 }
 
 .mempool p {
-  text-align: left;
   font-size: 1rem;
   margin: 0.5rem 0;
+}
+
+.mempool strong {
+  font-size: 1.25rem;
 }
 
 .fee-usd {
@@ -266,6 +269,10 @@ p.last24h {
 
   .mempool p {
     margin: 0.25rem 0;
+  }
+
+  .mempool strong {
+    font-size: 1rem;
   }
 }
 
