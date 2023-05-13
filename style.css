@@ -8,6 +8,16 @@
   --color-bad: rgb(230, 57, 115);
 }
 
+.light {
+  --color-bg: #c3c3ec;
+  --color-borders: #9595cc;
+  --color-text: rgb(44, 35, 49);
+  --color-text-accent: rgb(3, 46, 2);
+  --color-good: rgb(0, 95, 82);
+  --color-mid: rgb(143, 57, 0);
+  --color-bad: rgb(184, 3, 63);
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -26,6 +36,41 @@ body {
   background-color: var(--color-bg);
 }
 
+h1 {
+  font-size: 1rem;
+  font-weight: normal;
+  color: var(--color-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 0.5rem;
+  opacity: 0;
+}
+
+button.mode {
+  width: 32px;
+  height: 32px;
+  border: none;
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  cursor: pointer;
+  background-color: transparent;
+  background-image: url(mode-light.svg);
+  background-size: contain;
+  opacity: 0.25;
+}
+
+.light button.mode {
+  background-image: url(mode-dark.svg);
+  opacity: 0.5;
+}
+
+.light button.mode:hover,
+button.mode:hover {
+  opacity: 1;
+}
+
 main {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -34,17 +79,11 @@ main {
   margin: 0.5rem;
 }
 
-h1,
 h2,
 p {
   text-align: center;
   color: var(--color-text);
   margin: 1rem 0;
-}
-
-h1 {
-  font-size: min(3rem, 6vw);
-  font-weight: normal;
 }
 
 p {
@@ -177,6 +216,11 @@ p.last24h {
   main {
     gap: 2rem;
   }
+
+  button.mode {
+    width: 24px;
+    height: 24px;
+  }
 }
 
 @media (orientation: portrait) {
@@ -199,5 +243,10 @@ p.last24h {
 
   p.last24h {
     font-size: 4vw;
+  }
+
+  button.mode {
+    width: 24px;
+    height: 24px;
   }
 }

@@ -161,4 +161,16 @@ const watch = () => {
   });
 };
 
+if (localStorage.getItem("mode") === "light") {
+  document.body.classList.toggle("light");
+}
+
+document.getElementById("mode").addEventListener("click", () => {
+  document.body.classList.toggle("light");
+  localStorage.setItem(
+    "mode",
+    document.body.classList.contains("light") ? "light" : "dark"
+  );
+});
+
 watch();
