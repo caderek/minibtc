@@ -25,10 +25,11 @@ const mempool = {
   unconfirmed: 0,
 };
 
-const formatPrice = (price) =>
+const formatPrice = (price, showCents = true) =>
   new Intl.NumberFormat("en-US", {
     style: "currency",
     currency: "USD",
+    maximumFractionDigits: showCents ? 2 : 0,
   }).format(price);
 
 const formatNum = (price) => new Intl.NumberFormat("en-US").format(price);
@@ -120,23 +121,22 @@ const watch = () => {
     }
 
     const price = Number(data.price);
-    const formattedPrice = formatPrice(price);
 
     switch (data.type) {
       case "ticker": {
         open24h = Number(data.open_24h);
 
-        document.title = `BTC: ${formattedPrice} | ${formatPercentageChange(
-          open24h,
-          price
-        )}`;
+        document.title = `BTC: ${formatPrice(
+          price,
+          false
+        )} | ${formatPercentageChange(open24h, price)}`;
 
         break;
       }
 
       case "match":
       case "last_match": {
-        $price.innerText = formattedPrice;
+        $price.innerText = formatPrice(price);
 
         $feeLowUSD.innerText = getAverageTXCost(mempool.fees.low, price);
         $feeMidUSD.innerText = getAverageTXCost(mempool.fees.mid, price);
