@@ -153,7 +153,7 @@ const watchMempool = () => {
 };
 
 const watchPrice = () => {
-  let pong = false;
+  let lastHeartbeat = Date.now();
 
   const socket = new WebSocket("wss://ws-feed.pro.coinbase.com/");
 
@@ -164,19 +164,18 @@ const watchPrice = () => {
         channels: [
           { name: "ticker_1000", product_ids: ["BTC-USD"] },
           { name: "matches", product_ids: ["BTC-USD"] },
+          { name: "heartbeat", product_ids: ["BTC-USD"] },
         ],
       })
     );
 
     window.addEventListener("focus", async () => {
-      socket.send("ping");
-      await delay(1000);
+      const msSinceLastHeartbeat = Date.now() - lastHeartbeat;
+      console.log(msSinceLastHeartbeat);
 
-      if (!pong) {
+      if (msSinceLastHeartbeat > 2000) {
         socket.close();
         watchPrice();
-      } else {
-        pong = false;
       }
     });
   });
@@ -194,7 +193,11 @@ const watchPrice = () => {
   socket.addEventListener("message", (event) => {
     const data = JSON.parse(event.data);
 
-    if (!["ticker", "match", "last_match", "error"].includes(data.type)) {
+    if (
+      !["ticker", "match", "last_match", "error", "heartbeat"].includes(
+        data.type
+      )
+    ) {
       return;
     }
 
@@ -235,15 +238,16 @@ const watchPrice = () => {
         prevPrice = price;
         break;
       }
-      case "error":
-        if (data.message === "Malformed JSON") {
-          pong = true;
-        } else {
-          socket.close();
-          watchPrice();
-        }
+      case "heartbeat": {
+        lastHeartbeat = Date.now();
+        break;
+      }
+      case "error": {
+        socket.close();
+        watchPrice();
 
         break;
+      }
     }
   });
 };
