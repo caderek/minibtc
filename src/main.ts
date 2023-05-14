@@ -1,6 +1,8 @@
 import "./style.css";
 import { formatBytes, formatNum, formatPrice } from "./formatters";
+// @ts-ignore
 import type { PWAInstallElement } from "@khmyznikov/pwa-install";
+// @ts-ignore
 import isMobile from "is-mobile";
 
 const $price = document.querySelector("#price") as HTMLElement;
@@ -15,6 +17,7 @@ const $unconfirmed = document.querySelector("#unconfirmed") as HTMLElement;
 const $incoming = document.querySelector("#incoming") as HTMLElement;
 const $memory = document.querySelector("#memory") as HTMLElement;
 const $install = document.querySelector("#install") as HTMLElement;
+const $box = document.querySelector(".box") as HTMLElement;
 
 const AVERAGE_TX_SIZE = 140; // vB
 const OPTIMAL_INCOMING = 1670; // vB/s
@@ -219,13 +222,6 @@ document.getElementById("mode")!.addEventListener("click", () => {
   );
 });
 
-document.addEventListener("keydown", (e) => {
-  if (e.key === "F11") {
-    e.preventDefault();
-    document.querySelector(".box")!.requestFullscreen();
-  }
-});
-
 watchMempool();
 watchPrice();
 
@@ -252,4 +248,38 @@ if (isMobile() && !isStandalone()) {
   setTimeout(() => {
     $install.classList.add("go");
   }, 2000);
+}
+
+if (!isMobile()) {
+  const $fullscreen = document.getElementById(
+    "fullscreen"
+  ) as HTMLButtonElement;
+
+  $fullscreen.hidden = false;
+
+  const toggleFullscreen = () => {
+    if (!document.fullscreenElement) {
+      $box.requestFullscreen();
+      $fullscreen.classList.add("off");
+    } else {
+      document.exitFullscreen();
+      $fullscreen.classList.remove("off");
+    }
+  };
+
+  window.addEventListener("resize", () => {
+    if (!document.fullscreenElement) {
+      $fullscreen.classList.remove("off");
+    }
+  });
+
+  document.addEventListener("keydown", (e) => {
+    console.log(e.key);
+    if (e.key === "F11") {
+      e.preventDefault();
+      toggleFullscreen();
+    }
+  });
+
+  $fullscreen.addEventListener("click", toggleFullscreen);
 }
