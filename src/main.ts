@@ -235,14 +235,15 @@ const isStandalone = () => {
 };
 
 if (isMobile() && !isStandalone()) {
-  // @ts-ignore
-  import("@khmyznikov/pwa-install").then(() => {
-    const $pwaInstall = document.querySelector(
-      "pwa-install"
-    ) as unknown as PWAInstallElement;
+  $install.hidden = false;
 
-    $install.hidden = false;
-    $install.addEventListener("click", () => {
+  $install.addEventListener("click", () => {
+    // @ts-ignore
+    import("@khmyznikov/pwa-install").then(() => {
+      const $pwaInstall = document.querySelector(
+        "pwa-install"
+      ) as unknown as PWAInstallElement;
+
       $pwaInstall.showDialog();
     });
   });
