@@ -1,6 +1,7 @@
 import "./style.css";
 import { formatBytes, formatNum, formatPrice } from "./formatters";
-import type { PWAInstallElement } from "../node_modules/@khmyznikov/pwa-install/dist/types/index";
+import type { PWAInstallElement } from "@khmyznikov/pwa-install";
+import isMobile from "is-mobile";
 
 const $price = document.querySelector("#price") as HTMLElement;
 const $last24h = document.querySelector("#last24h") as HTMLElement;
@@ -228,16 +229,18 @@ document.addEventListener("keydown", (e) => {
 watchMempool();
 watchPrice();
 
-// @ts-ignore
-import("@khmyznikov/pwa-install").then(() => {
-  const $pwaInstall = document.querySelector(
-    "pwa-install"
-  ) as unknown as PWAInstallElement;
+if (isMobile()) {
+  // @ts-ignore
+  import("@khmyznikov/pwa-install").then(() => {
+    const $pwaInstall = document.querySelector(
+      "pwa-install"
+    ) as unknown as PWAInstallElement;
 
-  if (!$pwaInstall.isUnderStandaloneMode) {
-    $install.hidden = false;
-    $install.addEventListener("click", () => {
-      $pwaInstall.showDialog();
-    });
-  }
-});
+    if (!$pwaInstall.isUnderStandaloneMode) {
+      $install.hidden = false;
+      $install.addEventListener("click", () => {
+        $pwaInstall.showDialog();
+      });
+    }
+  });
+}
