@@ -171,7 +171,6 @@ const watchPrice = () => {
 
     window.addEventListener("focus", async () => {
       const msSinceLastHeartbeat = Date.now() - lastHeartbeat;
-      console.log(msSinceLastHeartbeat);
 
       if (msSinceLastHeartbeat > 2000) {
         socket.close();
@@ -276,7 +275,7 @@ const isStandalone = () => {
   );
 };
 
-if (isMobile() && !isStandalone()) {
+if (!isMobile() && !isStandalone()) {
   $install.hidden = false;
 
   setTimeout(() => {
@@ -284,6 +283,8 @@ if (isMobile() && !isStandalone()) {
   }, 2000);
 
   $install.addEventListener("click", () => {
+    $install.classList.add("wait");
+    $install.classList.remove("go");
     // @ts-ignore
     import("@khmyznikov/pwa-install").then(() => {
       const $pwaInstall = document.querySelector(
@@ -291,6 +292,7 @@ if (isMobile() && !isStandalone()) {
       ) as unknown as PWAInstallElement;
 
       $pwaInstall.showDialog();
+      $install.classList.remove("wait");
     });
   });
 }
