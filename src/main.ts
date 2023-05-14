@@ -162,6 +162,11 @@ const watchPrice = () => {
     watchMempool();
   });
 
+  socket.addEventListener("error", () => {
+    socket.close();
+    watchMempool();
+  });
+
   socket.addEventListener("message", (event) => {
     const data = JSON.parse(event.data);
 
