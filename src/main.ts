@@ -237,6 +237,10 @@ const isStandalone = () => {
 if (isMobile() && !isStandalone()) {
   $install.hidden = false;
 
+  setTimeout(() => {
+    $install.classList.add("go");
+  }, 2000);
+
   $install.addEventListener("click", () => {
     // @ts-ignore
     import("@khmyznikov/pwa-install").then(() => {
@@ -247,10 +251,6 @@ if (isMobile() && !isStandalone()) {
       $pwaInstall.showDialog();
     });
   });
-
-  setTimeout(() => {
-    $install.classList.add("go");
-  }, 2000);
 }
 
 if (!isMobile()) {
