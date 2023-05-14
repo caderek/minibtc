@@ -1,5 +1,6 @@
 import "./style.css";
 import { formatBytes, formatNum, formatPrice } from "./formatters";
+import type { PWAInstallElement } from "../node_modules/@khmyznikov/pwa-install/dist/types/index";
 
 const $price = document.querySelector("#price") as HTMLElement;
 const $last24h = document.querySelector("#last24h") as HTMLElement;
@@ -12,6 +13,7 @@ const $feeHighUSD = document.querySelector("#fee-high-usd") as HTMLElement;
 const $unconfirmed = document.querySelector("#unconfirmed") as HTMLElement;
 const $incoming = document.querySelector("#incoming") as HTMLElement;
 const $memory = document.querySelector("#memory") as HTMLElement;
+const $install = document.querySelector("#install") as HTMLElement;
 
 const AVERAGE_TX_SIZE = 140; // vB
 const OPTIMAL_INCOMING = 1670; // vB/s
@@ -227,4 +229,15 @@ watchMempool();
 watchPrice();
 
 // @ts-ignore
-import("@khmyznikov/pwa-install");
+import("@khmyznikov/pwa-install").then(() => {
+  const $pwaInstall = document.querySelector(
+    "pwa-install"
+  ) as unknown as PWAInstallElement;
+
+  if (!$pwaInstall.isUnderStandaloneMode) {
+    $install.hidden = false;
+    $install.addEventListener("click", () => {
+      $pwaInstall.showDialog();
+    });
+  }
+});
