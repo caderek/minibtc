@@ -214,13 +214,15 @@ if (localStorage.getItem("mode") === "light") {
   document.body.classList.toggle("light");
 }
 
-document.getElementById("mode")!.addEventListener("click", () => {
+const toggleDarkMode = () => {
   document.body.classList.toggle("light");
   localStorage.setItem(
     "mode",
     document.body.classList.contains("light") ? "light" : "dark"
   );
-});
+};
+
+document.getElementById("mode")!.addEventListener("click", toggleDarkMode);
 
 watchMempool();
 watchPrice();
@@ -274,10 +276,11 @@ if (!isMobile()) {
   });
 
   document.addEventListener("keydown", (e) => {
-    console.log(e.key);
-    if (e.key === "F11") {
+    if (e.key === "F11" || e.key === "f") {
       e.preventDefault();
       toggleFullscreen();
+    } else if (e.key === "m") {
+      toggleDarkMode();
     }
   });
 
