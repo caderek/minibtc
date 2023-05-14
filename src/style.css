@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;700&family=Ubuntu+Mono:wght@400;700&display=swap");
+
 :root {
   --color-bg: #0c0c14;
   --color-bg-header: #141422;
@@ -7,6 +9,8 @@
   --color-good: rgb(0, 148, 128);
   --color-mid: rgb(252, 152, 59);
   --color-bad: rgb(230, 57, 115);
+  --font-mono: "Ubuntu Mono", ui-monospace, monospace;
+  --font-sans: "Baloo 2", system-ui, sans-serif;
 }
 
 .light {
@@ -32,7 +36,7 @@ html {
 }
 
 body {
-  font-family: Ubuntu, system-ui, sans-serif;
+  font-family: var(--font-sans);
   background-color: var(--color-bg);
 }
 
@@ -51,11 +55,11 @@ header a:hover {
 }
 
 h1 {
-  font-size: 1rem;
-  line-height: 1rem;
+  font-size: 1.5rem;
+  line-height: 1.5rem;
   font-weight: bold;
   color: var(--color-good);
-  padding: 1rem;
+  padding: 0.75rem;
   display: inline-block;
   background-image: url(/logo.svg);
   background-size: 2rem;
@@ -112,10 +116,20 @@ p {
   text-align: center;
   color: var(--color-text);
   margin: 1rem 0;
+  line-height: 1;
 }
 
 p {
-  font-family: "Ubuntu Mono", ui-monospace, monospace;
+  font-family: var(--font-mono);
+}
+
+h2,
+h1 {
+  font-family: var(--font-sans);
+}
+
+strong {
+  font-family: var(--font-mono);
 }
 
 p#price {
@@ -169,7 +183,7 @@ p.last24h {
 }
 
 .fees ul {
-  font-family: "Ubuntu Mono", ui-monospace, monospace;
+  font-family: var(--font-mono);
   list-style: none;
   text-align: center;
   display: grid;
@@ -191,7 +205,7 @@ p.last24h {
 .fees h2,
 .price h2 {
   font-weight: normal;
-  font-size: 1rem;
+  font-size: 1.2rem;
   margin: 0;
   position: absolute;
   top: calc(-0.5em);
