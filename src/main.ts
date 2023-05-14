@@ -139,22 +139,32 @@ const watchPrice = () => {
     return;
   }
 
+  let pong = false;
+
   const socket = new WebSocket("wss://ws-feed.pro.coinbase.com/");
 
   socket.addEventListener("open", () => {
     socket.send(
       JSON.stringify({
         type: "subscribe",
-        channels: [{ name: "ticker_1000", product_ids: ["BTC-USD"] }],
+        channels: [
+          { name: "ticker_1000", product_ids: ["BTC-USD"] },
+          { name: "matches", product_ids: ["BTC-USD"] },
+        ],
       })
     );
 
-    socket.send(
-      JSON.stringify({
-        type: "subscribe",
-        channels: [{ name: "matches", product_ids: ["BTC-USD"] }],
-      })
-    );
+    window.addEventListener("focus", async () => {
+      socket.send("ping");
+      await delay(1000);
+
+      if (!pong) {
+        socket.close();
+        watchMempool();
+      } else {
+        pong = false;
+      }
+    });
   });
 
   socket.addEventListener("close", async () => {
@@ -162,7 +172,7 @@ const watchPrice = () => {
     watchMempool();
   });
 
-  socket.addEventListener("error", () => {
+  socket.addEventListener("error", (error) => {
     socket.close();
     watchMempool();
   });
@@ -170,7 +180,7 @@ const watchPrice = () => {
   socket.addEventListener("message", (event) => {
     const data = JSON.parse(event.data);
 
-    if (!["ticker", "match", "last_match"].includes(data.type)) {
+    if (!["ticker", "match", "last_match", "error"].includes(data.type)) {
       return;
     }
 
@@ -211,6 +221,15 @@ const watchPrice = () => {
         prevPrice = price;
         break;
       }
+      case "error":
+        if (data.message === "Malformed JSON") {
+          pong = true;
+        } else {
+          socket.close();
+          watchMempool();
+        }
+
+        break;
     }
   });
 };
