@@ -57,6 +57,8 @@ const formatPercentageChange = (startPrice: number, currentPrice: number) => {
 };
 
 const watchMempool = () => {
+  let pong = false;
+
   const socket = new WebSocket("wss://mempool.space/api/v1/ws");
 
   socket.addEventListener("open", () => {
@@ -70,6 +72,18 @@ const watchMempool = () => {
         data: ["stats", "live-2h-chart"],
       })
     );
+
+    window.addEventListener("focus", async () => {
+      socket.send(JSON.stringify({ action: "ping" }));
+      await delay(1000);
+
+      if (!pong) {
+        socket.close();
+        watchPrice();
+      } else {
+        pong = false;
+      }
+    });
   });
 
   socket.addEventListener("close", async () => {
@@ -80,6 +94,10 @@ const watchMempool = () => {
   socket.addEventListener("message", (event) => {
     const data = JSON.parse(event.data);
     const keys = Object.keys(data);
+
+    if (data.pong) {
+      pong = true;
+    }
 
     if (
       keys.length === 0 ||
@@ -135,10 +153,6 @@ const watchMempool = () => {
 };
 
 const watchPrice = () => {
-  if (!$price || !$last24h) {
-    return;
-  }
-
   let pong = false;
 
   const socket = new WebSocket("wss://ws-feed.pro.coinbase.com/");
@@ -160,7 +174,7 @@ const watchPrice = () => {
 
       if (!pong) {
         socket.close();
-        watchMempool();
+        watchPrice();
       } else {
         pong = false;
       }
@@ -169,12 +183,12 @@ const watchPrice = () => {
 
   socket.addEventListener("close", async () => {
     await delay(1000);
-    watchMempool();
+    watchPrice();
   });
 
-  socket.addEventListener("error", (error) => {
+  socket.addEventListener("error", () => {
     socket.close();
-    watchMempool();
+    watchPrice();
   });
 
   socket.addEventListener("message", (event) => {
@@ -226,7 +240,7 @@ const watchPrice = () => {
           pong = true;
         } else {
           socket.close();
-          watchMempool();
+          watchPrice();
         }
 
         break;
