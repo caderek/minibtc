@@ -229,19 +229,24 @@ document.addEventListener("keydown", (e) => {
 watchMempool();
 watchPrice();
 
-if (isMobile()) {
+const isStandalone = () => {
+  return (
+    window.matchMedia("(display-mode: standalone)").matches ||
+    ("standalone" in navigator && (navigator as any).standalone === true)
+  );
+};
+
+if (isMobile() && !isStandalone()) {
   // @ts-ignore
   import("@khmyznikov/pwa-install").then(() => {
     const $pwaInstall = document.querySelector(
       "pwa-install"
     ) as unknown as PWAInstallElement;
 
-    if (!$pwaInstall.isUnderStandaloneMode) {
-      $install.hidden = false;
-      $install.addEventListener("click", () => {
-        $pwaInstall.showDialog();
-      });
-    }
+    $install.hidden = false;
+    $install.addEventListener("click", () => {
+      $pwaInstall.showDialog();
+    });
   });
 
   setTimeout(() => {
