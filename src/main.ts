@@ -243,4 +243,8 @@ if (isMobile()) {
       });
     }
   });
+
+  setTimeout(() => {
+    $install.classList.add("go");
+  }, 2000);
 }

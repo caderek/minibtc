@@ -269,6 +269,17 @@ p.last24h {
   font-size: 1.25rem;
 }
 
+@keyframes beat {
+  to {
+    transform: scale(1.3);
+  }
+}
+
+.go {
+  animation: beat 0.5s 6 alternate;
+  transform-origin: center;
+}
+
 @media (max-width: 512px) {
   .fees li {
     font-size: 0.875rem;
