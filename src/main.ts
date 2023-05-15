@@ -14,6 +14,7 @@ const $feeLowUSD = document.querySelector("#fee-low-usd") as HTMLElement;
 const $feeMidUSD = document.querySelector("#fee-mid-usd") as HTMLElement;
 const $feeHighUSD = document.querySelector("#fee-high-usd") as HTMLElement;
 const $unconfirmed = document.querySelector("#unconfirmed") as HTMLElement;
+const $blocks = document.querySelector("#blocks") as HTMLElement;
 const $incoming = document.querySelector("#incoming") as HTMLElement;
 const $memory = document.querySelector("#memory") as HTMLElement;
 const $install = document.querySelector("#install") as HTMLElement;
@@ -56,6 +57,16 @@ const formatPercentageChange = (startPrice: number, currentPrice: number) => {
   );
 };
 
+const getBlocksCount = (blocks: { blockVSize: number }[]) => {
+  if (blocks.length <= 1) {
+    return blocks.length;
+  }
+
+  const last = Math.ceil(blocks[blocks.length - 1].blockVSize / 1e6);
+
+  return blocks.length - 1 + last;
+};
+
 const watchMempool = () => {
   let pong = false;
 
@@ -69,7 +80,7 @@ const watchMempool = () => {
     socket.send(
       JSON.stringify({
         action: "want",
-        data: ["stats", "live-2h-chart"],
+        data: ["stats", "live-2h-chart", "mempool-blocks"],
       })
     );
 
@@ -110,12 +121,25 @@ const watchMempool = () => {
       mempool.unconfirmed = data.mempoolInfo.size;
       $unconfirmed.innerText = formatNum(mempool.unconfirmed);
 
-      $unconfirmed.className =
+      const colorClass =
         mempool.unconfirmed <= 1e4
           ? "low"
           : mempool.unconfirmed <= 1e5
           ? "mid"
           : "high";
+
+      $unconfirmed.className = colorClass;
+      $blocks.className = colorClass;
+    }
+
+    if (data["mempool-blocks"]) {
+      const blocks = (
+        Array.isArray(data["mempool-blocks"]) ? data["mempool-blocks"] : []
+      ) as { blockVSize: number }[];
+
+      const blocksCount = getBlocksCount(blocks);
+
+      $blocks.innerText = String(blocksCount);
     }
 
     if (data.fees) {
@@ -275,7 +299,7 @@ const isStandalone = () => {
   );
 };
 
-if (!isMobile() && !isStandalone()) {
+if (isMobile() && !isStandalone()) {
   $install.hidden = false;
 
   setTimeout(() => {
