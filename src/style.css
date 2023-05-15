@@ -437,9 +437,4 @@ p.last24h {
   p.last24h {
     font-size: 4vw;
   }
-
-  button.mode {
-    width: 24px;
-    height: 24px;
-  }
 }
