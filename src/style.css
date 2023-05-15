@@ -322,7 +322,7 @@ p.last24h {
 }
 
 .go {
-  animation: beat 0.5s 7 alternate;
+  animation: beat 0.25s 7 alternate;
   transform-origin: center;
 }
 
