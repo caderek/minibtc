@@ -1,5 +1,11 @@
 import "./style.css";
-import { formatBytes, formatNum, formatPrice } from "./formatters";
+import {
+  formatBytes,
+  formatNum,
+  formatPrice,
+  formatPercentageChange,
+} from "./formatters";
+
 // @ts-ignore
 import type { PWAInstallElement } from "@khmyznikov/pwa-install";
 // @ts-ignore
@@ -18,7 +24,9 @@ const $blocks = document.querySelector("#blocks") as HTMLElement;
 const $incoming = document.querySelector("#incoming") as HTMLElement;
 const $memory = document.querySelector("#memory") as HTMLElement;
 const $install = document.querySelector("#install") as HTMLElement;
-const $box = document.querySelector(".box") as HTMLElement;
+const $box = document.querySelector("#box") as HTMLElement;
+
+/* Setup constants and initial state */
 
 const AVERAGE_TX_SIZE = 140; // vB
 const OPTIMAL_INCOMING = 1670; // vB/s
@@ -38,24 +46,12 @@ const mempool = {
   memory: 0,
 };
 
-const getAverageTXCost = (satPerVB: number, price: number) =>
-  satPerVB < 0 ? "-" : formatPrice(satPerVB * AVERAGE_TX_SIZE * (price / 1e8));
+/* Helper functions */
 
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
-const formatPercentageChange = (startPrice: number, currentPrice: number) => {
-  const priceChange = Number((currentPrice / startPrice - 1).toPrecision(2));
-  const sign = priceChange > 0 ? "+" : "";
-
-  return (
-    sign +
-    new Intl.NumberFormat("en-US", {
-      style: "percent",
-      currency: "USD",
-      minimumFractionDigits: 2,
-    }).format(priceChange)
-  );
-};
+const getAverageTXCost = (satPerVB: number, price: number) =>
+  satPerVB < 0 ? "-" : formatPrice(satPerVB * AVERAGE_TX_SIZE * (price / 1e8));
 
 const getBlocksCount = (blocks: { blockVSize: number }[]) => {
   if (blocks.length <= 1) {
@@ -67,6 +63,9 @@ const getBlocksCount = (blocks: { blockVSize: number }[]) => {
   return blocks.length - 1 + last;
 };
 
+/**
+ * Retrieve and update mempool and fee information
+ */
 const watchMempool = () => {
   let pong = false;
 
@@ -176,6 +175,9 @@ const watchMempool = () => {
   });
 };
 
+/**
+ * Retrieve and update price information
+ */
 const watchPrice = () => {
   let lastHeartbeat = Date.now();
 
@@ -275,6 +277,11 @@ const watchPrice = () => {
   });
 };
 
+watchMempool();
+watchPrice();
+
+/* Handle dark mode switch */
+
 if (localStorage.getItem("mode") === "light") {
   document.body.classList.toggle("light");
 }
@@ -289,8 +296,7 @@ const toggleDarkMode = () => {
 
 document.getElementById("mode")!.addEventListener("click", toggleDarkMode);
 
-watchMempool();
-watchPrice();
+/* Handle PWA install on mobile */
 
 const isStandalone = () => {
   return (
@@ -320,6 +326,8 @@ if (isMobile() && !isStandalone()) {
     });
   });
 }
+
+/* Handle fullscreen and shortcuts on desktop */
 
 if (!isMobile()) {
   const $fullscreen = document.getElementById(
