@@ -19,11 +19,11 @@ export const formatBytes = (bytes: number) => {
   }
 
   if (bytes / 1e6 >= 1) {
-    return `${Math.floor(bytes / 1e6)} MB`;
+    return `${Math.round(bytes / 1e6)} MB`;
   }
 
   if (bytes / 1e3 >= 1) {
-    return `${Math.floor(bytes / 1e3)} kB`;
+    return `${Math.round(bytes / 1e3)} kB`;
   }
 
   return `${bytes} B`;
