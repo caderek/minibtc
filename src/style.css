@@ -326,17 +326,6 @@ p.last24h {
   transform-origin: center;
 }
 
-footer {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  font-family: var(--font-mono);
-  color: var(--color-text);
-  padding: 0.25rem;
-  opacity: 0.3;
-  font-size: 0.75rem;
-}
-
 @keyframes beat {
   to {
     transform: scale(1.3);
