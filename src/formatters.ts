@@ -45,3 +45,13 @@ export const formatPercentageChange = (
     }).format(priceChange)
   );
 };
+
+const MS_IN_MINUTE = 1000 * 60;
+const MS_IN_HOUR = MS_IN_MINUTE * 60;
+
+export const formatTimeAgo = (ms: number, precision: number = 0) => {
+  const h = Math.floor(ms / MS_IN_HOUR);
+  const m = ((ms - MS_IN_HOUR * h) / MS_IN_MINUTE).toFixed(precision);
+
+  return `${h > 0 ? `${h}h ` : ""}${m}m`;
+};

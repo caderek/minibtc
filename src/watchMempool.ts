@@ -1,16 +1,46 @@
-import { formatBytes, formatNum } from "./formatters";
+import { formatBytes, formatNum, formatTimeAgo } from "./formatters";
 import { delay, getBlocksCount } from "./helpers";
 import type { State } from "./state";
 import config from "./config";
 import {
+  $averageBlock,
   $blocks,
   $feeHigh,
   $feeLow,
   $feeMid,
   $incoming,
+  $lastBlock,
   $memory,
   $unconfirmed,
 } from "./dom";
+
+const lastBlockTicker = {
+  isRunning: false,
+  init(state: State) {
+    if (this.isRunning) {
+      this.update(state);
+      return;
+    }
+    this.isRunning = true;
+    this.run(state);
+  },
+  run(state: State) {
+    lastBlockTicker.update(state);
+    setTimeout(lastBlockTicker.run, 10000, state);
+  },
+  update(state: State) {
+    const timeSinceLastBlock = Date.now() - state.lastBlockTimestamp;
+
+    $lastBlock.innerText = formatTimeAgo(timeSinceLastBlock);
+
+    $lastBlock.className =
+      timeSinceLastBlock <= 1000 * 60 * 10
+        ? "low"
+        : timeSinceLastBlock <= 1000 * 60 * 30
+        ? "mid"
+        : "high";
+  },
+};
 
 /**
  * Retrieve and update mempool and fee information
@@ -28,7 +58,7 @@ const watchMempool = (state: State) => {
     socket.send(
       JSON.stringify({
         action: "want",
-        data: ["stats", "live-2h-chart", "mempool-blocks"],
+        data: ["stats", "live-2h-chart", "mempool-blocks", "blocks"],
       })
     );
 
@@ -63,6 +93,30 @@ const watchMempool = (state: State) => {
       (keys.length === 1 && keys[0] === "loadingIndicators")
     ) {
       return;
+    }
+
+    if (
+      (data.blocks && Array.isArray(data.blocks) && data.blocks.length > 0) ||
+      data.block
+    ) {
+      const lastBlock = data.blocks
+        ? data.blocks[data.blocks.length - 1]
+        : data.block;
+
+      state.lastBlockTimestamp = lastBlock.timestamp * 1000;
+
+      lastBlockTicker.init(state);
+    }
+
+    if (data.da?.timeAvg) {
+      $averageBlock.innerText = formatTimeAgo(data.da.timeAvg, 1);
+
+      $averageBlock.className =
+        data.da.timeAvg <= 540000 || data.da.timeAvg >= 660000
+          ? "high"
+          : data.da.timeAvg <= 594000 || data.da.timeAvg >= 606000
+          ? "mid"
+          : "low";
     }
 
     if (data.mempoolInfo?.size) {

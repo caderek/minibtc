@@ -9,6 +9,7 @@ export type State = {
   unconfirmed: number;
   incoming: number;
   memory: number;
+  lastBlockTimestamp: number;
 };
 
 const state: State = {
@@ -22,6 +23,7 @@ const state: State = {
   unconfirmed: 0,
   incoming: 0,
   memory: 0,
+  lastBlockTimestamp: 0,
 };
 
 export default state;
