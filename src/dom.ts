@@ -20,3 +20,8 @@ export const $lastBlock = document.querySelector("#last-block") as HTMLElement;
 export const $averageBlock = document.querySelector(
   "#average-block"
 ) as HTMLElement;
+export const $priceSection = document.querySelector(".price") as HTMLElement;
+export const $feesSection = document.querySelector(".fees") as HTMLElement;
+export const $mempoolSection = document.querySelector(
+  ".mempool"
+) as HTMLElement;

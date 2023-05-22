@@ -12,6 +12,8 @@ import {
   $lastBlock,
   $memory,
   $unconfirmed,
+  $feesSection,
+  $mempoolSection,
 } from "./dom";
 
 const lastBlockTicker = {
@@ -49,12 +51,14 @@ const watchMempool = (state: State) => {
   let pong = false;
 
   const socket = new WebSocket("wss://mempool.space/api/v1/ws");
+  $feesSection.classList.add("loading");
+  $mempoolSection.classList.add("loading");
 
   socket.addEventListener("open", () => {
+    $feesSection.classList.remove("loading");
+    $mempoolSection.classList.remove("loading");
+
     socket.send(JSON.stringify({ action: "init" }));
-  });
-
-  socket.addEventListener("open", () => {
     socket.send(
       JSON.stringify({
         action: "want",

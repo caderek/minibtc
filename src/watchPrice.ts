@@ -1,4 +1,12 @@
-import { $feeHighUSD, $feeLowUSD, $feeMidUSD, $last24h, $price } from "./dom";
+import {
+  $feeHighUSD,
+  $feeLowUSD,
+  $feeMidUSD,
+  $last24h,
+  $price,
+  $priceSection,
+  $feesSection,
+} from "./dom";
 import { formatPercentageChange, formatPrice } from "./formatters";
 import { delay, getAverageTXCost } from "./helpers";
 import type { State } from "./state";
@@ -10,8 +18,12 @@ const watchPrice = (state: State) => {
   let lastHeartbeat = Date.now();
 
   const socket = new WebSocket("wss://ws-feed.pro.coinbase.com/");
+  $priceSection.classList.add("loading");
+  $feesSection.classList.add("price-loading");
 
   socket.addEventListener("open", () => {
+    $priceSection.classList.remove("loading");
+    $feesSection.classList.remove("price-loading");
     socket.send(
       JSON.stringify({
         type: "subscribe",

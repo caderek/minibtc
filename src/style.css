@@ -11,6 +11,7 @@
   --color-bad: rgb(230, 57, 115);
   --font-mono: "Ubuntu Mono", ui-monospace, monospace;
   --font-sans: "Baloo 2", system-ui, sans-serif;
+  --spinner-img: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDgiIGhlaWdodD0iNDgiIHZpZXdCb3g9IjAgMCA0OCA0OCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGcgY2xpcC1wYXRoPSJ1cmwoI2NsaXAwXzE1XzMpIj4KPHBhdGggZD0iTTMuNzM5NDUgMjMuODU3OUMxLjUxNzIzIDIzLjg1NzkgLTAuMzE5MzgyIDI1LjY3MjkgMC4wNDY3NDE3IDI3Ljg2NDdDMS45NTUzOCAzOS4yOTExIDExLjg4OTYgNDggMjMuODU3OSA0OEMzNy4xOTEyIDQ4IDQ4IDM3LjE5MTIgNDggMjMuODU3OUM0OCAxMS44ODk2IDM5LjI5MTEgMS45NTUzOCAyNy44NjQ3IDAuMDQ2NzQxNkMyNS42NzI5IC0wLjMxOTM4MiAyMy44NTc5IDEuNTE3MjMgMjMuODU3OSAzLjczOTQ1QzIzLjg1NzkgNS45NjE2NyAyNS42ODczIDcuNzExNTIgMjcuODQwOSA4LjI1OTc3QzM0LjgwMzMgMTAuMDMyMyAzOS45NTI2IDE2LjM0MzcgMzkuOTUyNiAyMy44NTc5QzM5Ljk1MjYgMzIuNzQ2OCAzMi43NDY4IDM5Ljk1MjYgMjMuODU3OSAzOS45NTI2QzE2LjM0MzcgMzkuOTUyNiAxMC4wMzIzIDM0LjgwMzMgOC4yNTk3NyAyNy44NDA5QzcuNzExNTIgMjUuNjg3MyA1Ljk2MTY3IDIzLjg1NzkgMy43Mzk0NSAyMy44NTc5WiIgZmlsbD0iI0EzOTJBQyIvPgo8L2c+CjxkZWZzPgo8Y2xpcFBhdGggaWQ9ImNsaXAwXzE1XzMiPgo8cmVjdCB3aWR0aD0iNDgiIGhlaWdodD0iNDgiIGZpbGw9IndoaXRlIi8+CjwvY2xpcFBhdGg+CjwvZGVmcz4KPC9zdmc+Cg==");
 }
 
 .light {
@@ -163,7 +164,7 @@ button:hover {
 button.wait {
   animation: spin 1s linear infinite;
   transform-origin: center;
-  background-image: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDgiIGhlaWdodD0iNDgiIHZpZXdCb3g9IjAgMCA0OCA0OCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGcgY2xpcC1wYXRoPSJ1cmwoI2NsaXAwXzE1XzMpIj4KPHBhdGggZD0iTTMuNzM5NDUgMjMuODU3OUMxLjUxNzIzIDIzLjg1NzkgLTAuMzE5MzgyIDI1LjY3MjkgMC4wNDY3NDE3IDI3Ljg2NDdDMS45NTUzOCAzOS4yOTExIDExLjg4OTYgNDggMjMuODU3OSA0OEMzNy4xOTEyIDQ4IDQ4IDM3LjE5MTIgNDggMjMuODU3OUM0OCAxMS44ODk2IDM5LjI5MTEgMS45NTUzOCAyNy44NjQ3IDAuMDQ2NzQxNkMyNS42NzI5IC0wLjMxOTM4MiAyMy44NTc5IDEuNTE3MjMgMjMuODU3OSAzLjczOTQ1QzIzLjg1NzkgNS45NjE2NyAyNS42ODczIDcuNzExNTIgMjcuODQwOSA4LjI1OTc3QzM0LjgwMzMgMTAuMDMyMyAzOS45NTI2IDE2LjM0MzcgMzkuOTUyNiAyMy44NTc5QzM5Ljk1MjYgMzIuNzQ2OCAzMi43NDY4IDM5Ljk1MjYgMjMuODU3OSAzOS45NTI2QzE2LjM0MzcgMzkuOTUyNiAxMC4wMzIzIDM0LjgwMzMgOC4yNTk3NyAyNy44NDA5QzcuNzExNTIgMjUuNjg3MyA1Ljk2MTY3IDIzLjg1NzkgMy43Mzk0NSAyMy44NTc5WiIgZmlsbD0iI0EzOTJBQyIvPgo8L2c+CjxkZWZzPgo8Y2xpcFBhdGggaWQ9ImNsaXAwXzE1XzMiPgo8cmVjdCB3aWR0aD0iNDgiIGhlaWdodD0iNDgiIGZpbGw9IndoaXRlIi8+CjwvY2xpcFBhdGg+CjwvZGVmcz4KPC9zdmc+Cg==");
+  background-image: var(--spinner-img);
 }
 
 .light button.wait {
@@ -325,6 +326,21 @@ p.last24h {
 .go {
   animation: beat 0.25s 7 alternate;
   transform-origin: center;
+}
+
+.loading::before,
+.price-loading::before {
+  content: "";
+  width: 1rem;
+  height: 1rem;
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  animation: spin 1s linear infinite;
+  transform-origin: center;
+  background-image: var(--spinner-img);
+  background-size: contain;
+  opacity: 0.5;
 }
 
 @keyframes beat {
