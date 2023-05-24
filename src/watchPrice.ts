@@ -51,7 +51,10 @@ const watchPrice = async (state: State, wait: number = 1000) => {
       const msSinceLastHeartbeat = Date.now() - lastHeartbeat;
 
       if (msSinceLastHeartbeat > 2000) {
-        if ([status.CLOSED].includes(socket.readyState)) {
+        if (
+          socket.readyState === status.CLOSED &&
+          socket.readyState !== status.CLOSING
+        ) {
           watchPrice(state);
         } else {
           socket.close();
@@ -62,14 +65,6 @@ const watchPrice = async (state: State, wait: number = 1000) => {
 
   socket.addEventListener("close", async () => {
     watchPrice(state);
-  });
-
-  socket.addEventListener("error", () => {
-    if ([status.CLOSED].includes(socket.readyState)) {
-      watchPrice(state);
-    } else {
-      socket.close();
-    }
   });
 
   socket.addEventListener("message", (event) => {

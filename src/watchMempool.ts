@@ -83,7 +83,10 @@ const watchMempool = async (state: State, wait: number = 1000) => {
       await delay(1000);
 
       if (!pong) {
-        if ([status.CLOSED].includes(socket.readyState)) {
+        if (
+          socket.readyState === status.CLOSED &&
+          socket.readyState !== status.CLOSING
+        ) {
           watchMempool(state);
         } else {
           socket.close();
@@ -96,14 +99,6 @@ const watchMempool = async (state: State, wait: number = 1000) => {
 
   socket.addEventListener("close", async () => {
     watchMempool(state);
-  });
-
-  socket.addEventListener("error", async () => {
-    if ([status.CLOSED].includes(socket.readyState)) {
-      watchMempool(state);
-    } else {
-      socket.close();
-    }
   });
 
   socket.addEventListener("message", (event) => {
