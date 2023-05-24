@@ -51,7 +51,9 @@ const MS_IN_HOUR = MS_IN_MINUTE * 60;
 
 export const formatTimeAgo = (ms: number, precision: number = 0) => {
   const h = Math.floor(ms / MS_IN_HOUR);
-  const m = ((ms - MS_IN_HOUR * h) / MS_IN_MINUTE).toFixed(precision);
+  const m = new Intl.NumberFormat("en-US", {
+    maximumFractionDigits: precision,
+  }).format((ms - MS_IN_HOUR * h) / MS_IN_MINUTE);
 
   return `${h > 0 ? `${h}h ` : ""}${m}m`;
 };
