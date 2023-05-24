@@ -54,12 +54,17 @@ const lastBlockTicker = {
 /**
  * Retrieve and update mempool and fee information
  */
-const watchMempool = (state: State) => {
+const watchMempool = async (state: State, wait: number = 1000) => {
+  $feesSection.classList.add("loading");
+  $mempoolSection.classList.add("loading");
+
+  if (wait > 0) {
+    await delay(wait);
+  }
+
   let pong = false;
 
   const socket = new WebSocket("wss://mempool.space/api/v1/ws");
-  $feesSection.classList.add("loading");
-  $mempoolSection.classList.add("loading");
 
   socket.addEventListener("open", () => {
     $feesSection.classList.remove("loading");

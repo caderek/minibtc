@@ -8,7 +8,7 @@ import {
   $feesSection,
 } from "./dom";
 import { formatPercentageChange, formatPrice } from "./formatters";
-import { getAverageTXCost } from "./helpers";
+import { getAverageTXCost, delay } from "./helpers";
 import type { State } from "./state";
 
 const status = {
@@ -21,12 +21,17 @@ const status = {
 /**
  * Retrieve and update price information
  */
-const watchPrice = (state: State) => {
+const watchPrice = async (state: State, wait: number = 1000) => {
+  $priceSection.classList.add("loading");
+  $feesSection.classList.add("price-loading");
+
+  if (wait > 0) {
+    await delay(wait);
+  }
+
   let lastHeartbeat = Date.now();
 
   const socket = new WebSocket("wss://ws-feed.pro.coinbase.com/");
-  $priceSection.classList.add("loading");
-  $feesSection.classList.add("price-loading");
 
   socket.addEventListener("open", () => {
     $priceSection.classList.remove("loading");
