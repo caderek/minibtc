@@ -8,7 +8,7 @@ import {
   $feesSection,
 } from "./dom";
 import { formatPercentageChange, formatPrice } from "./formatters";
-import { delay, getAverageTXCost } from "./helpers";
+import { getAverageTXCost } from "./helpers";
 import type { State } from "./state";
 
 /**
