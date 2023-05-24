@@ -42,19 +42,16 @@ const watchPrice = (state: State) => {
 
       if (msSinceLastHeartbeat > 2000) {
         socket.close();
-        watchPrice(state);
       }
     });
   });
 
   socket.addEventListener("close", async () => {
-    await delay(1000);
     watchPrice(state);
   });
 
   socket.addEventListener("error", () => {
     socket.close();
-    watchPrice(state);
   });
 
   socket.addEventListener("message", (event) => {
