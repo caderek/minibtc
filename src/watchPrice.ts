@@ -11,6 +11,13 @@ import { formatPercentageChange, formatPrice } from "./formatters";
 import { getAverageTXCost } from "./helpers";
 import type { State } from "./state";
 
+const status = {
+  CONNECTING: 0,
+  OPEN: 1,
+  CLOSING: 2,
+  CLOSED: 3,
+};
+
 /**
  * Retrieve and update price information
  */
@@ -39,7 +46,11 @@ const watchPrice = (state: State) => {
       const msSinceLastHeartbeat = Date.now() - lastHeartbeat;
 
       if (msSinceLastHeartbeat > 2000) {
-        socket.close();
+        if ([status.CLOSED].includes(socket.readyState)) {
+          watchPrice(state);
+        } else {
+          socket.close();
+        }
       }
     });
   });
@@ -49,7 +60,11 @@ const watchPrice = (state: State) => {
   });
 
   socket.addEventListener("error", () => {
-    socket.close();
+    if ([status.CLOSED].includes(socket.readyState)) {
+      watchPrice(state);
+    } else {
+      socket.close();
+    }
   });
 
   socket.addEventListener("message", (event) => {

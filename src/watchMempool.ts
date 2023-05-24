@@ -16,6 +16,13 @@ import {
   $mempoolSection,
 } from "./dom";
 
+const status = {
+  CONNECTING: 0,
+  OPEN: 1,
+  CLOSING: 2,
+  CLOSED: 3,
+};
+
 const lastBlockTicker = {
   isRunning: false,
   init(state: State) {
@@ -71,7 +78,11 @@ const watchMempool = (state: State) => {
       await delay(1000);
 
       if (!pong) {
-        socket.close();
+        if ([status.CLOSED].includes(socket.readyState)) {
+          watchMempool(state);
+        } else {
+          socket.close();
+        }
       } else {
         pong = false;
       }
@@ -79,8 +90,15 @@ const watchMempool = (state: State) => {
   });
 
   socket.addEventListener("close", async () => {
-    await delay(1000);
     watchMempool(state);
+  });
+
+  socket.addEventListener("error", async () => {
+    if ([status.CLOSED].includes(socket.readyState)) {
+      watchMempool(state);
+    } else {
+      socket.close();
+    }
   });
 
   socket.addEventListener("message", (event) => {
