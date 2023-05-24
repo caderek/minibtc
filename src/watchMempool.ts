@@ -16,13 +16,6 @@ import {
   $mempoolSection,
 } from "./dom";
 
-const status = {
-  CONNECTING: 0,
-  OPEN: 1,
-  CLOSING: 2,
-  CLOSED: 3,
-};
-
 const lastBlockTicker = {
   isRunning: false,
   init(state: State) {

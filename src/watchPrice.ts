@@ -21,8 +21,6 @@ const watchPrice = (state: State) => {
   $priceSection.classList.add("loading");
   $feesSection.classList.add("price-loading");
 
-  console.log(socket.readyState);
-
   socket.addEventListener("open", () => {
     $priceSection.classList.remove("loading");
     $feesSection.classList.remove("price-loading");
