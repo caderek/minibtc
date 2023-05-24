@@ -58,9 +58,7 @@ const watchMempool = async (state: State, wait: number = 1000) => {
   $feesSection.classList.add("loading");
   $mempoolSection.classList.add("loading");
 
-  if (wait > 0) {
-    await delay(wait);
-  }
+  await delay(wait);
 
   let pong = false;
 

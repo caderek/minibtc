@@ -25,9 +25,7 @@ const watchPrice = async (state: State, wait: number = 1000) => {
   $priceSection.classList.add("loading");
   $feesSection.classList.add("price-loading");
 
-  if (wait > 0) {
-    await delay(wait);
-  }
+  await delay(wait);
 
   let lastHeartbeat = Date.now();
 
