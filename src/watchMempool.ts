@@ -51,6 +51,8 @@ const lastBlockTicker = {
   },
 };
 
+let focus = false;
+
 /**
  * Retrieve and update mempool and fee information
  */
@@ -58,7 +60,9 @@ const watchMempool = async (state: State, wait: number = 1000) => {
   $feesSection.classList.add("loading");
   $mempoolSection.classList.add("loading");
 
-  await delay(wait);
+  if (!focus) {
+    await delay(wait);
+  }
 
   let pong = false;
 
@@ -79,6 +83,7 @@ const watchMempool = async (state: State, wait: number = 1000) => {
     window.addEventListener("focus", async () => {
       socket.send(JSON.stringify({ action: "ping" }));
       await delay(1000);
+      focus = true;
 
       if (!pong) {
         if (
@@ -92,6 +97,8 @@ const watchMempool = async (state: State, wait: number = 1000) => {
       } else {
         pong = false;
       }
+
+      focus = false;
     });
   });
 

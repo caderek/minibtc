@@ -18,6 +18,8 @@ const status = {
   CLOSED: 3,
 };
 
+let focus = false;
+
 /**
  * Retrieve and update price information
  */
@@ -25,7 +27,9 @@ const watchPrice = async (state: State, wait: number = 1000) => {
   $priceSection.classList.add("loading");
   $feesSection.classList.add("price-loading");
 
-  await delay(wait);
+  if (!focus) {
+    await delay(wait);
+  }
 
   let lastHeartbeat = Date.now();
 
@@ -47,6 +51,7 @@ const watchPrice = async (state: State, wait: number = 1000) => {
 
     window.addEventListener("focus", async () => {
       const msSinceLastHeartbeat = Date.now() - lastHeartbeat;
+      focus = true;
 
       if (msSinceLastHeartbeat > 2000) {
         if (
@@ -58,6 +63,8 @@ const watchPrice = async (state: State, wait: number = 1000) => {
           socket.close();
         }
       }
+
+      focus = false;
     });
   });
 
