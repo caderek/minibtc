@@ -56,7 +56,7 @@ let focus = false;
 /**
  * Retrieve and update mempool and fee information
  */
-const watchMempool = async (state: State, wait: number = 1000) => {
+const watchMempoolOld = async (state: State, wait: number = 1000) => {
   $feesSection.classList.add("loading");
   $mempoolSection.classList.add("loading");
 
@@ -89,7 +89,7 @@ const watchMempool = async (state: State, wait: number = 1000) => {
           socket.readyState === status.CLOSED &&
           socket.readyState !== status.CLOSING
         ) {
-          watchMempool(state);
+          watchMempoolOld(state);
         } else {
           socket.close();
         }
@@ -100,16 +100,12 @@ const watchMempool = async (state: State, wait: number = 1000) => {
   });
 
   socket.addEventListener("close", async () => {
-    watchMempool(state);
+    watchMempoolOld(state);
   });
 
   socket.addEventListener("message", (event) => {
     const data = JSON.parse(event.data);
     const keys = Object.keys(data);
-
-    if (data.pong) {
-      pong = true;
-    }
 
     if (
       keys.length === 0 ||
@@ -132,7 +128,7 @@ const watchMempool = async (state: State, wait: number = 1000) => {
     }
 
     if (data.da?.timeAvg) {
-      $averageBlock.innerText = formatTimeAgo(data.da.timeAvg, 1);
+      $averageBlock.innerText = formatTimeAgo(data.da.timeAvg, 2);
 
       $averageBlock.className =
         data.da.timeAvg <= 540000 || data.da.timeAvg >= 660000
@@ -201,4 +197,4 @@ const watchMempool = async (state: State, wait: number = 1000) => {
   });
 };
 
-export default watchMempool;
+export default watchMempoolOld;
