@@ -1,6 +1,6 @@
 import WS from "./WS";
 import { formatBytes, formatNum, formatTimeAgo } from "./formatters";
-import { delay, getBlocksCount } from "./helpers";
+import { getBlocksCount } from "./helpers";
 import state, { State } from "./state";
 import config from "./config";
 import {
