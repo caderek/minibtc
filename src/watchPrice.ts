@@ -34,6 +34,7 @@ function watchPrice() {
       }
 
       const price = Number(data.price);
+      state.lastPrice = price;
 
       switch (data.type) {
         case "ticker": {

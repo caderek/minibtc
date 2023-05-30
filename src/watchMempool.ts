@@ -1,6 +1,6 @@
 import WS from "./WS";
 import { formatBytes, formatNum, formatTimeAgo } from "./formatters";
-import { getBlocksCount } from "./helpers";
+import { getAverageTXCost, getBlocksCount } from "./helpers";
 import state, { State } from "./state";
 import config from "./config";
 import {
@@ -15,6 +15,9 @@ import {
   $unconfirmed,
   $feesSection,
   $mempoolSection,
+  $feeHighUSD,
+  $feeLowUSD,
+  $feeMidUSD,
 } from "./dom";
 
 const lastBlockTicker = {
@@ -121,6 +124,21 @@ function watchMempool() {
         $feeLow.innerText = String(state.fees.low);
         $feeMid.innerText = String(state.fees.mid);
         $feeHigh.innerText = String(state.fees.high);
+
+        if (state.lastPrice >= 0) {
+          $feeLowUSD.innerText = getAverageTXCost(
+            state.fees.low,
+            state.lastPrice
+          );
+          $feeMidUSD.innerText = getAverageTXCost(
+            state.fees.mid,
+            state.lastPrice
+          );
+          $feeHighUSD.innerText = getAverageTXCost(
+            state.fees.high,
+            state.lastPrice
+          );
+        }
       }
 
       if (data.vBytesPerSecond || data["live-2h-chart"]?.vbytes_per_second) {
