@@ -25,19 +25,14 @@ function watchPrice() {
       },
     ],
     messageHandler(data) {
-      if (
-        !["ticker", "match", "last_match", "error", "heartbeat"].includes(
-          data.type
-        )
-      ) {
+      if (!["ticker", "match", "last_match", "heartbeat"].includes(data.type)) {
         return;
       }
 
-      const price = Number(data.price);
-      state.lastPrice = price;
-
       switch (data.type) {
         case "ticker": {
+          const price = Number(data.price);
+          state.lastPrice = price;
           state.open24h = Number(data.open_24h);
 
           document.title = `BTC: ${formatPrice(
@@ -50,6 +45,8 @@ function watchPrice() {
 
         case "match":
         case "last_match": {
+          const price = Number(data.price);
+          state.lastPrice = price;
           $price.innerText = formatPrice(price);
 
           $feeLowUSD.innerText = getAverageTXCost(state.fees.low, price);
