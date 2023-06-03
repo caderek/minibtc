@@ -83,6 +83,7 @@ button.mode {
   cursor: pointer;
   background-color: transparent;
   background-size: contain;
+  background-repeat: no-repeat;
   opacity: 0.8;
 }
 
