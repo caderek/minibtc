@@ -18,7 +18,16 @@ import {
   $feeHighUSD,
   $feeLowUSD,
   $feeMidUSD,
+  $halvingBlocks,
+  $halvingCountdown,
+  $halvingDate,
 } from "./dom";
+import calculateHalvingData from "./halving";
+
+type Block = {
+  height: number;
+  timestamp: number;
+};
 
 const lastBlockTicker = {
   isRunning: false,
@@ -48,6 +57,19 @@ const lastBlockTicker = {
   },
 };
 
+function updateHalvingData() {
+  if (state.lastBlockHeight === -1) {
+    return;
+  }
+
+  const { blocksToNextHalving, estimatedDateGMT, estimatedDuration } =
+    calculateHalvingData();
+
+  $halvingBlocks.innerText = formatNum(blocksToNextHalving);
+  $halvingCountdown.innerHTML = estimatedDuration;
+  $halvingDate.innerText = estimatedDateGMT;
+}
+
 function watchMempool() {
   new WS("wss://mempool.space/api/v1/ws", {
     initialMessages: [
@@ -67,20 +89,8 @@ function watchMempool() {
         return;
       }
 
-      if (
-        (data.blocks && Array.isArray(data.blocks) && data.blocks.length > 0) ||
-        data.block
-      ) {
-        const lastBlock = data.blocks
-          ? data.blocks[data.blocks.length - 1]
-          : data.block;
-
-        state.lastBlockTimestamp = lastBlock.timestamp * 1000;
-
-        lastBlockTicker.init(state);
-      }
-
       if (data.da?.timeAvg) {
+        state.averageBlockTime = data.da.timeAvg;
         $averageBlock.innerText = formatTimeAgo(data.da.timeAvg, 1);
 
         $averageBlock.className =
@@ -89,6 +99,22 @@ function watchMempool() {
             : data.da.timeAvg <= 594000 || data.da.timeAvg >= 606000
             ? "mid"
             : "low";
+        updateHalvingData();
+      }
+
+      if (
+        (data.blocks && Array.isArray(data.blocks) && data.blocks.length > 0) ||
+        data.block
+      ) {
+        const lastBlock = data.blocks
+          ? (data.blocks as Block[]).sort((a, b) => b.height - a.height)[0]
+          : (data.block as Block);
+
+        state.lastBlockHeight = lastBlock.height;
+        state.lastBlockTimestamp = lastBlock.timestamp * 1000;
+
+        lastBlockTicker.init(state);
+        updateHalvingData();
       }
 
       if (data.mempoolInfo?.size) {

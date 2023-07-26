@@ -10,7 +10,9 @@ export type State = {
   incoming: number;
   memory: number;
   lastBlockTimestamp: number;
+  lastBlockHeight: number;
   lastPrice: number;
+  averageBlockTime: number;
 };
 
 const state: State = {
@@ -25,7 +27,9 @@ const state: State = {
   incoming: 0,
   memory: 0,
   lastBlockTimestamp: 0,
+  lastBlockHeight: -1,
   lastPrice: -1,
+  averageBlockTime: 600000,
 };
 
 export default state;

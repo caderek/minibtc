@@ -46,8 +46,10 @@ export const formatPercentageChange = (
   );
 };
 
-const MS_IN_MINUTE = 1000 * 60;
+const MS_IN_SECOND = 1000;
+const MS_IN_MINUTE = MS_IN_SECOND * 60;
 const MS_IN_HOUR = MS_IN_MINUTE * 60;
+const MS_IN_DAY = MS_IN_HOUR * 24;
 
 export const formatTimeAgo = (ms: number, precision: number = 0) => {
   const h = Math.floor(ms / MS_IN_HOUR);
@@ -56,4 +58,24 @@ export const formatTimeAgo = (ms: number, precision: number = 0) => {
   }).format((ms - MS_IN_HOUR * h) / MS_IN_MINUTE);
 
   return `${h > 0 ? `${h}h ` : ""}${m}m`;
+};
+
+export const formatDuration = (ms: number) => {
+  const d = Math.floor(ms / MS_IN_DAY);
+  const h = Math.floor((ms - MS_IN_DAY * d) / MS_IN_HOUR);
+  const m = Math.floor((ms - MS_IN_DAY * d - MS_IN_HOUR * h) / MS_IN_MINUTE);
+
+  const parts = [];
+
+  if (d > 0) {
+    parts.push(`<strong>${d}</strong> day${d === 1 ? "" : "s"}`);
+  }
+
+  if (d > 0 || h > 0) {
+    parts.push(`<strong>${h}</strong> hour${h === 1 ? "" : "s"}`);
+  }
+
+  parts.push(`<strong>${m}</strong> minute${m === 1 ? "" : "s"}`);
+
+  return parts.join(" ");
 };
