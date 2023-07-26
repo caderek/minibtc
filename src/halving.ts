@@ -40,21 +40,19 @@ function calculateHalvingData() {
     calculateBlocksToDifficultyAdjustment(lastBlockHeight)
   );
 
+  const estimatedAverageForCurrentDifficulty = Math.round(
+    ((DIFFICULTY_EPOCH - blocksInCurrentDifficulty) * currentAverageBlockTime +
+      blocksInCurrentDifficulty * TARGET_BLOCK_TIME) /
+      DIFFICULTY_EPOCH
+  );
+
   const otherBlocks = blocksToNextHalving - blocksInCurrentDifficulty;
 
-  const now = Date.now();
-  const timeSinceLastBlock = now - state.lastBlockTimestamp;
-
   const timeToHalving =
-    blocksInCurrentDifficulty * currentAverageBlockTime +
-    otherBlocks * TARGET_BLOCK_TIME -
-    Math.min(timeSinceLastBlock, currentAverageBlockTime);
+    blocksInCurrentDifficulty * estimatedAverageForCurrentDifficulty +
+    otherBlocks * TARGET_BLOCK_TIME;
 
-  const isLate = blocksToNextHalving === 1 && timeToHalving <= 0;
-
-  const estimatedDate = isLate
-    ? new Date()
-    : new Date(Date.now() + timeToHalving);
+  const estimatedDate = new Date(Date.now() + timeToHalving);
 
   const currentHalving = calculateCurrentHalving(lastBlockHeight);
 
@@ -64,9 +62,7 @@ function calculateHalvingData() {
     estimatedDate,
     estimatedDateGMT:
       estimatedDate.toISOString().replace(/[TZ]/g, " ").slice(0, 16) + " UTC",
-    estimatedDuration: isLate
-      ? "ANY MOMENT NOW"
-      : formatDuration(timeToHalving),
+    estimatedDuration: formatDuration(timeToHalving),
     currentSubsidy: calculateSubsidy(currentHalving),
     nextSubsidy: calculateSubsidy(currentHalving + 1),
   };
