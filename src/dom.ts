@@ -25,6 +25,9 @@ export const $feesSection = document.querySelector(".fees") as HTMLElement;
 export const $mempoolSection = document.querySelector(
   ".mempool"
 ) as HTMLElement;
+export const $halvingSection = document.querySelector(
+  ".halving"
+) as HTMLElement;
 export const $halvingCountdown = document.querySelector(
   "#halving-countdown"
 ) as HTMLElement;

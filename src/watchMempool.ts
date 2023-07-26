@@ -15,6 +15,7 @@ import {
   $unconfirmed,
   $feesSection,
   $mempoolSection,
+  $halvingSection,
   $feeHighUSD,
   $feeLowUSD,
   $feeMidUSD,
@@ -205,10 +206,12 @@ function watchMempool() {
     loadingStartAction() {
       $feesSection.classList.add("loading");
       $mempoolSection.classList.add("loading");
+      $halvingSection.classList.add("loading");
     },
     loadingEndAction() {
       $feesSection.classList.remove("loading");
       $mempoolSection.classList.remove("loading");
+      $halvingSection.classList.remove("loading");
     },
   });
 }
