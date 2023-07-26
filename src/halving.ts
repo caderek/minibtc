@@ -1,6 +1,6 @@
 const HALVING_EPOCH = 210000; // halving is at 210000 block
 const DIFFICULTY_EPOCH = 2016; // at
-const NUMBER_OF_HALVINGS = 32; // 0-32 50BTC-1SAT
+// const NUMBER_OF_HALVINGS = 32; // 0-32 50BTC-1SAT
 const TARGET_BLOCK_TIME = 600000; // ms, 10 min
 
 import { formatDuration } from "./formatters";
@@ -14,9 +14,9 @@ function calculateCurrentHalving(lastBlockHeight: number) {
   return Math.floor(lastBlockHeight / HALVING_EPOCH);
 }
 
-function isAfterLastHalving(lastBlockHeight: number) {
-  return Math.floor(lastBlockHeight / HALVING_EPOCH) >= NUMBER_OF_HALVINGS;
-}
+// function isAfterLastHalving(lastBlockHeight: number) {
+//   return Math.floor(lastBlockHeight / HALVING_EPOCH) >= NUMBER_OF_HALVINGS;
+// }
 
 function calculateBlocksToHalving(lastBlockHeight: number) {
   const blocksInCurrentHalving = lastBlockHeight % HALVING_EPOCH;
