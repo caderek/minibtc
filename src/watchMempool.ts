@@ -62,12 +62,18 @@ function updateHalvingData() {
     return;
   }
 
-  const { blocksToNextHalving, estimatedDateGMT, estimatedDuration } =
-    calculateHalvingData();
+  const {
+    blocksToNextHalving,
+    estimatedDateGMT,
+    estimatedDuration,
+    estimatedDate,
+  } = calculateHalvingData();
 
   $halvingBlocks.innerText = formatNum(blocksToNextHalving);
   $halvingCountdown.innerHTML = estimatedDuration;
   $halvingDate.innerText = estimatedDateGMT;
+
+  $halvingDate.title = `Local time: ${estimatedDate.toLocaleString()}`;
 }
 
 function watchMempool() {
