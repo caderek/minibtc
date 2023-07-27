@@ -429,6 +429,18 @@ p.last24h {
   }
 }
 
+@media (orientation: portrait) and (max-height: 820px) {
+  .price {
+    padding: 1.5rem;
+  }
+
+  .fees,
+  .mempool,
+  .halving {
+    padding-bottom: 0.5rem;
+  }
+}
+
 @media (orientation: portrait) and (max-height: 760px) {
   p#price {
     margin: 0;
