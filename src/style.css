@@ -240,6 +240,7 @@ p.last24h {
   grid-area: price;
   display: grid;
   place-content: center;
+  min-width: 1200px;
 }
 
 .fees {
@@ -357,6 +358,10 @@ p.last24h {
 }
 
 @media (max-width: 1279px) {
+  .price {
+    min-width: auto;
+  }
+
   p#price {
     font-size: min(10rem, 12vw);
   }
