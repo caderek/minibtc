@@ -68,7 +68,7 @@ function updateHalvingData() {
     estimatedDateGMT,
     estimatedDuration,
     estimatedDate,
-  } = calculateHalvingData();
+  } = calculateHalvingData(state.averageBlockTime, state.lastBlockHeight);
 
   $halvingBlocks.innerText = formatNum(blocksToNextHalving);
   $halvingCountdown.innerHTML = estimatedDuration;

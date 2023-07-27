@@ -4,7 +4,6 @@ const DIFFICULTY_EPOCH = 2016; // at
 const TARGET_BLOCK_TIME = 600000; // ms, 10 min
 
 import { formatDuration } from "./formatters";
-import state from "./state";
 
 function calculateSubsidy(halvings: number) {
   return Number((50n * 100000000n) >> BigInt(halvings));
@@ -30,9 +29,10 @@ function calculateBlocksToDifficultyAdjustment(lastBlockHeight: number) {
   return DIFFICULTY_EPOCH - blocksInCurrentDifficulty;
 }
 
-function calculateHalvingData() {
-  let currentAverageBlockTime = state.averageBlockTime;
-  const lastBlockHeight = state.lastBlockHeight;
+function calculateHalvingData(
+  currentAverageBlockTime: number,
+  lastBlockHeight: number
+) {
   const blocksToNextHalving = calculateBlocksToHalving(lastBlockHeight);
 
   const blocksInCurrentDifficulty = Math.min(
