@@ -4,10 +4,10 @@ Use as a website or install as an app on your phone: [minibtc.netlify.app](https
 
 ## Screenshots
 
-- Desktop
+- Desktop:
 
 ![Desktop Screenshot](https://raw.githubusercontent.com/caderek/minibtc/main/public/screenshots/desktop.png)
 
-- Mobile
+- Mobile:
 
 ![Mobile Screenshot](https://raw.githubusercontent.com/caderek/minibtc/main/public/screenshots/mobile.png)
