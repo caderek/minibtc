@@ -117,6 +117,17 @@ function watchMempool() {
           ? (data.blocks as Block[]).sort((a, b) => b.height - a.height)[0]
           : (data.block as Block);
 
+        if (
+          state.lastBlockHeight !== -1 &&
+          lastBlock.height > state.lastBlockHeight
+        ) {
+          $mempoolSection.classList.add("new-block");
+
+          setTimeout(() => {
+            $mempoolSection.classList.remove("new-block");
+          }, 500);
+        }
+
         state.lastBlockHeight = lastBlock.height;
         state.lastBlockTimestamp = lastBlock.timestamp * 1000;
 

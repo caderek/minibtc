@@ -251,6 +251,7 @@ p.last24h {
   grid-area: mempool;
   display: grid;
   place-content: center;
+  transition: 0.5s;
 }
 
 .halving {
@@ -349,6 +350,11 @@ p.last24h {
   background-image: var(--spinner-img);
   background-size: contain;
   opacity: 0.5;
+}
+
+.new-block {
+  scale: 105%;
+  border-color: var(--color-text-accent);
 }
 
 @keyframes beat {
