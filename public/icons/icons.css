@@ -1,8 +1,8 @@
 @font-face {
     font-family: "icons";
-    src: url("./icons.ttf?cb81390768f59220a2828b2d4882106f") format("truetype"),
-url("./icons.woff?cb81390768f59220a2828b2d4882106f") format("woff"),
-url("./icons.woff2?cb81390768f59220a2828b2d4882106f") format("woff2");
+    src: url("./icons.ttf?5485603f93cd27333778a34d699766b4") format("truetype"),
+url("./icons.woff?5485603f93cd27333778a34d699766b4") format("woff"),
+url("./icons.woff2?5485603f93cd27333778a34d699766b4") format("woff2");
 }
 
 i[class^="icon-"]:before, i[class*=" icon-"]:before {
@@ -22,15 +22,18 @@ i[class^="icon-"]:before, i[class*=" icon-"]:before {
 .icon-fullscreen:before {
     content: "\f102";
 }
-.icon-install:before {
+.icon-github:before {
     content: "\f103";
 }
-.icon-mode-dark:before {
+.icon-install:before {
     content: "\f104";
 }
-.icon-mode-light:before {
+.icon-mode-dark:before {
     content: "\f105";
 }
-.icon-wait:before {
+.icon-mode-light:before {
     content: "\f106";
+}
+.icon-wait:before {
+    content: "\f107";
 }

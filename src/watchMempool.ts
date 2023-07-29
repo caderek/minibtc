@@ -121,10 +121,15 @@ function watchMempool() {
           state.lastBlockHeight !== -1 &&
           lastBlock.height > state.lastBlockHeight
         ) {
-          $mempoolSection.classList.add("new-block");
+          $mempoolSection.classList.add("transit");
+          $mempoolSection.classList.add("highlight");
 
           setTimeout(() => {
-            $mempoolSection.classList.remove("new-block");
+            $mempoolSection.classList.remove("highlight");
+
+            setTimeout(() => {
+              $mempoolSection.classList.remove("transit");
+            }, 500);
           }, 500);
         }
 
