@@ -59,28 +59,23 @@ const lastBlockTicker = {
 };
 
 if (localStorage.getItem("time") === "local") {
-  $halvingSection.classList.add("local");
+  state.display.halving = "local";
 }
 
-$halvingDate.addEventListener("click", () => {
-  $halvingSection.classList.toggle("local");
-  const date = $halvingSection.dataset.date;
-
-  if (date) {
-    $halvingDate.innerText = formatDate(new Date(date));
-  }
-
-  localStorage.setItem(
-    "time",
-    $halvingSection.classList.contains("local") ? "local" : "gmt"
-  );
-});
-
 function formatDate(date: Date) {
-  return $halvingSection.classList.contains("local")
+  return state.display.halving === "local"
     ? date.toLocaleString() + " local"
     : date.toUTCString().slice(0, 22) + " GMT";
 }
+
+$halvingDate.addEventListener("click", () => {
+  state.display.halving = state.display.halving === "gmt" ? "local" : "gmt";
+  localStorage.setItem("time", state.display.halving);
+
+  if (state.halvingDate) {
+    $halvingDate.innerText = formatDate(state.halvingDate);
+  }
+});
 
 function updateHalvingData() {
   if (state.lastBlockHeight === -1) {
@@ -95,7 +90,7 @@ function updateHalvingData() {
 
   $halvingDate.innerText = formatDate(estimatedDate);
 
-  $halvingSection.dataset.date = estimatedDate.toISOString();
+  state.halvingDate = estimatedDate;
 }
 
 function watchMempool() {

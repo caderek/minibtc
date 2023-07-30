@@ -8,9 +8,30 @@ import {
   $priceSection,
   $feesSection,
 } from "./dom";
-import { formatPercentageChange, formatPrice } from "./formatters";
+import {
+  formatPercentageChange,
+  formatPrice,
+  formatPriceAsSatsPer$,
+} from "./formatters";
 import { getAverageTXCost } from "./helpers";
 import state from "./state";
+
+if (localStorage.getItem("price") === "sats") {
+  state.display.price = "sats";
+}
+
+function displayPrice() {
+  $price.innerText =
+    state.display.price === "sats"
+      ? formatPriceAsSatsPer$(state.lastPrice)
+      : formatPrice(state.lastPrice);
+}
+
+$price.addEventListener("click", () => {
+  state.display.price = state.display.price === "usd" ? "sats" : "usd";
+  localStorage.setItem("price", state.display.price);
+  displayPrice();
+});
 
 function watchPrice() {
   new WS("wss://ws-feed.pro.coinbase.com/", {
@@ -47,7 +68,8 @@ function watchPrice() {
         case "last_match": {
           const price = Number(data.price);
           state.lastPrice = price;
-          $price.innerText = formatPrice(price);
+
+          displayPrice();
 
           $feeLowUSD.innerText = getAverageTXCost(state.fees.low, price);
           $feeMidUSD.innerText = getAverageTXCost(state.fees.mid, price);

@@ -13,6 +13,11 @@ export type State = {
   lastBlockHeight: number;
   lastPrice: number;
   averageBlockTime: number;
+  halvingDate?: Date;
+  display: {
+    price: "usd" | "sats";
+    halving: "gmt" | "local";
+  };
 };
 
 const state: State = {
@@ -30,6 +35,10 @@ const state: State = {
   lastBlockHeight: -1,
   lastPrice: -1,
   averageBlockTime: 600000,
+  display: {
+    price: "usd",
+    halving: "gmt",
+  },
 };
 
 export default state;

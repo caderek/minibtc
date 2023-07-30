@@ -8,6 +8,10 @@ export const formatPrice = (price: number, showCents = true) =>
 export const formatNum = (price: number) =>
   new Intl.NumberFormat("en-US").format(price);
 
+export const formatPriceAsSatsPer$ = (price: number) => {
+  return `${formatNum(Math.round(1e8 / price))} sat/$`;
+};
+
 export const formatBytes = (bytes: number) => {
   if (bytes / 1e9 >= 1) {
     const formatted = new Intl.NumberFormat("en-US", {

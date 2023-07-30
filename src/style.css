@@ -231,6 +231,7 @@ p#price {
   font-size: 10rem;
   margin: min(3rem, 4vw) 0;
   min-width: 1ch;
+  cursor: pointer;
 }
 
 p.last24h {
