@@ -58,6 +58,10 @@ const lastBlockTicker = {
   },
 };
 
+if (localStorage.getItem("time") === "local") {
+  $halvingSection.classList.add("local");
+}
+
 $halvingDate.addEventListener("click", () => {
   $halvingSection.classList.toggle("local");
   const date = $halvingSection.dataset.date;
@@ -65,6 +69,11 @@ $halvingDate.addEventListener("click", () => {
   if (date) {
     $halvingDate.innerText = formatDate(new Date(date));
   }
+
+  localStorage.setItem(
+    "time",
+    $halvingSection.classList.contains("local") ? "local" : "gmt"
+  );
 });
 
 function formatDate(date: Date) {
