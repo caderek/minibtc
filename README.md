@@ -29,4 +29,4 @@ You can add this as a widget to your website, here's the required code:
 
 You can tweak `width` and `height` to your needs, you can also set `dark` or `light` theme in the URL parameters.
 
-Interactive demo: [CodePen](https://codepen.io/caderek/pen/vYQQVax?editors=1000)
+Interactive demo: [CodePen](https://codepen.io/caderek/full/vYQQVax)
