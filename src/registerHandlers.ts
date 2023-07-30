@@ -5,6 +5,19 @@ import isMobile from "is-mobile";
 import { $box, $install } from "./dom";
 
 const registerHandlers = () => {
+  /* Handle embed mode */
+  const params = new URLSearchParams(location.search);
+
+  if (params.get("embed") === "true") {
+    document.body.classList.add("embed");
+
+    if (params.get("theme") === "light") {
+      document.body.classList.add("light");
+    }
+
+    return;
+  }
+
   /* Handle dark mode switch */
 
   if (localStorage.getItem("mode") === "light") {

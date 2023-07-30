@@ -555,3 +555,35 @@ p.last24h {
     font-size: 4vw;
   }
 }
+
+footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+  padding: 0.5rem;
+  display: none;
+}
+
+footer a {
+  color: var(--color-text);
+  text-decoration: underline;
+  opacity: 0.7;
+  font-size: 0.875rem;
+}
+
+.embed header {
+  display: none;
+}
+
+.embed footer {
+  display: block;
+}
+
+.embed .fullscreen {
+  display: none;
+}
+
+.embed .box {
+  height: 100%;
+}
