@@ -60,8 +60,7 @@ function calculateHalvingData(
     blocksToNextHalving,
     timeToHalving,
     estimatedDate,
-    estimatedDateGMT:
-      estimatedDate.toISOString().replace(/[TZ]/g, " ").slice(0, 16) + " UTC",
+    estimatedDateGMT: estimatedDate.toUTCString().slice(0, 22) + " GMT",
     estimatedDuration: formatDuration(timeToHalving),
     currentSubsidy: calculateSubsidy(currentHalving),
     nextSubsidy: calculateSubsidy(currentHalving + 1),
