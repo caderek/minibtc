@@ -14,6 +14,7 @@
   --color-borders: #1b1b2b;
   --color-text: rgb(163, 146, 172);
   --color-text-accent: rgb(85, 167, 214);
+  --color-icons: rgb(156, 130, 182);
   --color-good: rgb(0, 148, 128);
   --color-mid: rgb(252, 152, 59);
   --color-bad: rgb(230, 57, 115);
@@ -27,6 +28,7 @@
   --color-borders: #b2b2f0;
   --color-text: rgb(44, 35, 49);
   --color-text-accent: rgb(38, 0, 100);
+  --color-icons: rgb(52, 30, 75);
   --color-good: rgb(0, 95, 82);
   --color-mid: rgb(211, 67, 0);
   --color-bad: rgb(184, 3, 63);
@@ -117,7 +119,7 @@ nav a::before {
   font-size: 2rem;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  color: var(--color-text);
+  color: var(--color-icons);
 }
 
 button.mode {
@@ -164,7 +166,7 @@ button.fullscreen.off::before {
   content: "\f101";
 }
 
-.light button:hover,
+nav a:hover,
 button:hover {
   opacity: 1;
 }
