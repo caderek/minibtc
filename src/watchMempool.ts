@@ -58,23 +58,35 @@ const lastBlockTicker = {
   },
 };
 
+$halvingDate.addEventListener("click", () => {
+  $halvingSection.classList.toggle("local");
+  const date = $halvingSection.dataset.date;
+
+  if (date) {
+    $halvingDate.innerText = formatDate(new Date(date));
+  }
+});
+
+function formatDate(date: Date) {
+  return $halvingSection.classList.contains("local")
+    ? date.toLocaleString() + " local"
+    : date.toUTCString().slice(0, 22) + " GMT";
+}
+
 function updateHalvingData() {
   if (state.lastBlockHeight === -1) {
     return;
   }
 
-  const {
-    blocksToNextHalving,
-    estimatedDateGMT,
-    estimatedDuration,
-    estimatedDate,
-  } = calculateHalvingData(state.averageBlockTime, state.lastBlockHeight);
+  const { blocksToNextHalving, estimatedDuration, estimatedDate } =
+    calculateHalvingData(state.averageBlockTime, state.lastBlockHeight);
 
   $halvingBlocks.innerText = formatNum(blocksToNextHalving);
   $halvingCountdown.innerHTML = estimatedDuration;
-  $halvingDate.innerText = estimatedDateGMT;
 
-  $halvingDate.title = `Local time: ${estimatedDate.toLocaleString()}`;
+  $halvingDate.innerText = formatDate(estimatedDate);
+
+  $halvingSection.dataset.date = estimatedDate.toISOString();
 }
 
 function watchMempool() {
