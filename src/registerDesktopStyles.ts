@@ -1,6 +1,5 @@
 // @ts-ignore
 import isMobile from "is-mobile";
-import { brotliDecompressSync } from "zlib";
 
 const styles = `
   [data-title] {
