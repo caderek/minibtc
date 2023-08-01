@@ -22,6 +22,7 @@ const styles = `
     font-family: var(--font-sans);
     color: var(--color-bg);
     font-weight: normal;
+    line-height: 1.2;
   }
 `;
 

@@ -30,6 +30,7 @@ import {
   $halvingCountdown,
   $halvingDate,
   $blockTime,
+  $mempoolCongestion,
 } from "./dom";
 import calculateHalvingData from "./halving";
 
@@ -209,8 +210,13 @@ function watchMempool() {
         ) as { blockVSize: number }[];
 
         const blocksCount = getBlocksCount(blocks);
+        const backlogTime = formatDuration(
+          blocksCount * config.TARGET_BLOCK_TIME,
+          false
+        );
 
         $blocks.innerText = String(blocksCount);
+        $mempoolCongestion.dataset.title = `Minimum time to clear: ${backlogTime}`;
       }
 
       if (data.fees) {

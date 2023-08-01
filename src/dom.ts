@@ -26,6 +26,9 @@ export const $feesSection = document.querySelector(".fees") as HTMLElement;
 export const $mempoolSection = document.querySelector(
   ".mempool"
 ) as HTMLElement;
+export const $mempoolCongestion = document.querySelector(
+  "#mempool-congestion"
+) as HTMLElement;
 export const $halvingSection = document.querySelector(
   ".halving"
 ) as HTMLElement;
