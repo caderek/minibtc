@@ -17,6 +17,7 @@ export const $memory = document.querySelector("#memory") as HTMLElement;
 export const $install = document.querySelector("#install") as HTMLElement;
 export const $box = document.querySelector("#box") as HTMLElement;
 export const $lastBlock = document.querySelector("#last-block") as HTMLElement;
+export const $blockTime = document.querySelector("#block-time") as HTMLElement;
 export const $averageBlock = document.querySelector(
   "#average-block"
 ) as HTMLElement;

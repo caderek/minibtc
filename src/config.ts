@@ -2,4 +2,8 @@ export default {
   AVERAGE_TX_SIZE: 140, // vB
   OPTIMAL_INCOMING: 1e6 / 600, // 1666.(6) vB/s
   INCREASED_INCOMING: 3000, // vB/s
+  HALVING_EPOCH: 210000, // halving is at 210000 block
+  DIFFICULTY_EPOCH: 2016, // at
+  NUMBER_OF_HALVINGS: 32, // 0-32 50BTC-1SAT
+  TARGET_BLOCK_TIME: 600000, // ms, 10 min
 };

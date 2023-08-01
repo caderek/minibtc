@@ -16,7 +16,7 @@ const styles = `
     max-width: 300px;
     transform: translatex(-50%);
     padding: 0.5rem;
-    border-radius: 0.5rem;
+    border-radius: 0.25rem;
     z-index: 2;
     font-size: 0.875rem;
     font-family: var(--font-sans);

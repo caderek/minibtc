@@ -1,8 +1,4 @@
-const HALVING_EPOCH = 210000; // halving is at 210000 block
-const DIFFICULTY_EPOCH = 2016; // at
-// const NUMBER_OF_HALVINGS = 32; // 0-32 50BTC-1SAT
-const TARGET_BLOCK_TIME = 600000; // ms, 10 min
-
+import config from "./config";
 import { formatDuration } from "./formatters";
 
 function calculateSubsidy(halvings: number) {
@@ -10,23 +6,26 @@ function calculateSubsidy(halvings: number) {
 }
 
 function calculateCurrentHalving(lastBlockHeight: number) {
-  return Math.floor(lastBlockHeight / HALVING_EPOCH);
+  return Math.floor(lastBlockHeight / config.HALVING_EPOCH);
 }
 
 // function isAfterLastHalving(lastBlockHeight: number) {
-//   return Math.floor(lastBlockHeight / HALVING_EPOCH) >= NUMBER_OF_HALVINGS;
+//   return (
+//     Math.floor(lastBlockHeight / config.HALVING_EPOCH) >=
+//     config.NUMBER_OF_HALVINGS
+//   );
 // }
 
 function calculateBlocksToHalving(lastBlockHeight: number) {
-  const blocksInCurrentHalving = lastBlockHeight % HALVING_EPOCH;
+  const blocksInCurrentHalving = lastBlockHeight % config.HALVING_EPOCH;
 
-  return HALVING_EPOCH - blocksInCurrentHalving;
+  return config.HALVING_EPOCH - blocksInCurrentHalving;
 }
 
 function calculateBlocksToDifficultyAdjustment(lastBlockHeight: number) {
-  const blocksInCurrentDifficulty = lastBlockHeight % DIFFICULTY_EPOCH;
+  const blocksInCurrentDifficulty = lastBlockHeight % config.DIFFICULTY_EPOCH;
 
-  return DIFFICULTY_EPOCH - blocksInCurrentDifficulty;
+  return config.DIFFICULTY_EPOCH - blocksInCurrentDifficulty;
 }
 
 function calculateHalvingData(
@@ -41,16 +40,17 @@ function calculateHalvingData(
   );
 
   const estimatedAverageForCurrentDifficulty = Math.round(
-    ((DIFFICULTY_EPOCH - blocksInCurrentDifficulty) * currentAverageBlockTime +
-      blocksInCurrentDifficulty * TARGET_BLOCK_TIME) /
-      DIFFICULTY_EPOCH
+    ((config.DIFFICULTY_EPOCH - blocksInCurrentDifficulty) *
+      currentAverageBlockTime +
+      blocksInCurrentDifficulty * config.TARGET_BLOCK_TIME) /
+      config.DIFFICULTY_EPOCH
   );
 
   const otherBlocks = blocksToNextHalving - blocksInCurrentDifficulty;
 
   const timeToHalving =
     blocksInCurrentDifficulty * estimatedAverageForCurrentDifficulty +
-    otherBlocks * TARGET_BLOCK_TIME;
+    otherBlocks * config.TARGET_BLOCK_TIME;
 
   const estimatedDate = new Date(Date.now() + timeToHalving);
 
@@ -63,6 +63,7 @@ function calculateHalvingData(
     estimatedDuration: formatDuration(timeToHalving),
     currentSubsidy: calculateSubsidy(currentHalving),
     nextSubsidy: calculateSubsidy(currentHalving + 1),
+    estimatedAverageForCurrentDifficulty,
   };
 
   return data;

@@ -33,6 +33,13 @@ export const formatBytes = (bytes: number) => {
   return `${bytes} B`;
 };
 
+export const formatPercentage = (num: number, precision: number = 0) => {
+  return new Intl.NumberFormat("en-US", {
+    style: "percent",
+    minimumFractionDigits: precision,
+  }).format(num);
+};
+
 export const formatPercentageChange = (
   startPrice: number,
   currentPrice: number
@@ -44,7 +51,6 @@ export const formatPercentageChange = (
     sign +
     new Intl.NumberFormat("en-US", {
       style: "percent",
-      currency: "USD",
       minimumFractionDigits: 2,
     }).format(priceChange)
   );
@@ -64,7 +70,13 @@ export const formatTimeAgo = (ms: number, precision: number = 0) => {
   return `${h > 0 ? `${h}h ` : ""}${m}m`;
 };
 
-export const formatDuration = (ms: number) => {
+const getDurationChunk = (num: number, unit: string, html: boolean) => {
+  return html
+    ? `<strong>${num}</strong> ${unit}${num === 1 ? "" : "s"}`
+    : `${num} ${unit}${num === 1 ? "" : "s"}`;
+};
+
+export const formatDuration = (ms: number, html = true) => {
   const d = Math.floor(ms / MS_IN_DAY);
   const h = Math.floor((ms - MS_IN_DAY * d) / MS_IN_HOUR);
   const m = Math.floor((ms - MS_IN_DAY * d - MS_IN_HOUR * h) / MS_IN_MINUTE);
@@ -72,14 +84,14 @@ export const formatDuration = (ms: number) => {
   const parts = [];
 
   if (d > 0) {
-    parts.push(`<strong>${d}</strong> day${d === 1 ? "" : "s"}`);
+    parts.push(getDurationChunk(d, "day", html));
   }
 
   if (d > 0 || h > 0) {
-    parts.push(`<strong>${h}</strong> hour${h === 1 ? "" : "s"}`);
+    parts.push(getDurationChunk(h, "hour", html));
   }
 
-  parts.push(`<strong>${m}</strong> minute${m === 1 ? "" : "s"}`);
+  parts.push(getDurationChunk(m, "minute", html));
 
   return parts.join(" ");
 };

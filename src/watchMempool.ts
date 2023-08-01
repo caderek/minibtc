@@ -1,5 +1,12 @@
 import WS from "./WS";
-import { formatBytes, formatNum, formatTimeAgo } from "./formatters";
+import {
+  formatBytes,
+  formatDuration,
+  formatNum,
+  formatPercentage,
+  formatPercentageChange,
+  formatTimeAgo,
+} from "./formatters";
 import { getAverageTXCost, getBlocksCount } from "./helpers";
 import state, { State } from "./state";
 import config from "./config";
@@ -22,6 +29,7 @@ import {
   $halvingBlocks,
   $halvingCountdown,
   $halvingDate,
+  $blockTime,
 } from "./dom";
 import calculateHalvingData from "./halving";
 
@@ -82,8 +90,12 @@ function updateHalvingData() {
     return;
   }
 
-  const { blocksToNextHalving, estimatedDuration, estimatedDate } =
-    calculateHalvingData(state.averageBlockTime, state.lastBlockHeight);
+  const {
+    blocksToNextHalving,
+    estimatedDuration,
+    estimatedDate,
+    estimatedAverageForCurrentDifficulty,
+  } = calculateHalvingData(state.averageBlockTime, state.lastBlockHeight);
 
   $halvingBlocks.innerText = formatNum(blocksToNextHalving);
   $halvingCountdown.innerHTML = estimatedDuration;
@@ -91,6 +103,7 @@ function updateHalvingData() {
   $halvingDate.innerText = formatDate(estimatedDate);
 
   state.halvingDate = estimatedDate;
+  state.predictedAverageBlockTime = estimatedAverageForCurrentDifficulty;
 }
 
 function watchMempool() {
@@ -123,6 +136,25 @@ function watchMempool() {
             ? "mid"
             : "low";
         updateHalvingData();
+      }
+
+      if (data.da?.remainingBlocks) {
+        const progress = formatPercentage(
+          (config.DIFFICULTY_EPOCH - data.da.remainingBlocks) /
+            config.DIFFICULTY_EPOCH
+        );
+
+        const remainingTime = formatDuration(
+          data.da.remainingBlocks * state.predictedAverageBlockTime,
+          false
+        );
+        const predictedChange = `${
+          data.da.difficultyChange > 0 ? "+" : ""
+        }${data.da.difficultyChange.toFixed(2)}%`;
+
+        console.log({ progress });
+
+        $blockTime.dataset.title = `Difficulty adjustment in ${remainingTime} (${progress} complete), predicted change: ${predictedChange}`;
       }
 
       if (
