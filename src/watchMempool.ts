@@ -4,7 +4,6 @@ import {
   formatDuration,
   formatNum,
   formatPercentage,
-  formatPercentageChange,
   formatTimeAgo,
 } from "./formatters";
 import { getAverageTXCost, getBlocksCount } from "./helpers";
