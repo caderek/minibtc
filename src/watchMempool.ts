@@ -107,8 +107,7 @@ function updateHalvingData() {
   $halvingDate.innerText = formatDate(estimatedDate);
 
   const progress = formatPercentage(
-    (config.HALVING_EPOCH - blocksToNextHalving) / config.HALVING_EPOCH,
-    2
+    (config.HALVING_EPOCH - blocksToNextHalving) / config.HALVING_EPOCH
   );
 
   $halvingProgress.dataset.title = `Subsidy change: ${
@@ -156,9 +155,11 @@ function watchMempool() {
           data.da.remainingBlocks * state.predictedAverageBlockTime,
           false
         );
-        const predictedChange = `${
-          data.da.difficultyChange > 0 ? "+" : ""
-        }${data.da.difficultyChange.toFixed(2)}%`;
+        const predictedChange = Intl.NumberFormat("en-US", {
+          style: "percent",
+          minimumFractionDigits: 2,
+          signDisplay: "exceptZero",
+        }).format(data.da.difficultyChange / 100);
 
         $blockTime.dataset.title = `Difficulty adjustment in ${remainingTime}. Predicted change: ${predictedChange}`;
       }

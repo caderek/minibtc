@@ -37,6 +37,8 @@ export const formatPercentage = (num: number, precision: number = 0) => {
   return new Intl.NumberFormat("en-US", {
     style: "percent",
     minimumFractionDigits: precision,
+    // @ts-ignore
+    roundingMode: "floor",
   }).format(num);
 };
 
@@ -45,15 +47,12 @@ export const formatPercentageChange = (
   currentPrice: number
 ) => {
   const priceChange = Number((currentPrice / startPrice - 1).toPrecision(2));
-  const sign = priceChange > 0 ? "+" : "";
 
-  return (
-    sign +
-    new Intl.NumberFormat("en-US", {
-      style: "percent",
-      minimumFractionDigits: 2,
-    }).format(priceChange)
-  );
+  return new Intl.NumberFormat("en-US", {
+    style: "percent",
+    minimumFractionDigits: 2,
+    signDisplay: "exceptZero",
+  }).format(priceChange);
 };
 
 const MS_IN_SECOND = 1000;
