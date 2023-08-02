@@ -107,7 +107,8 @@ function updateHalvingData() {
   $halvingDate.innerText = formatDate(estimatedDate);
 
   const progress = formatPercentage(
-    (config.HALVING_EPOCH - blocksToNextHalving) / config.HALVING_EPOCH
+    (config.HALVING_EPOCH - blocksToNextHalving) / config.HALVING_EPOCH,
+    2
   );
 
   $halvingProgress.dataset.title = `Subsidy change: ${
