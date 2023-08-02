@@ -31,6 +31,7 @@ import {
   $halvingDate,
   $blockTime,
   $mempoolCongestion,
+  $halvingProgress,
 } from "./dom";
 import calculateHalvingData from "./halving";
 
@@ -96,12 +97,22 @@ function updateHalvingData() {
     estimatedDuration,
     estimatedDate,
     estimatedAverageForCurrentDifficulty,
+    currentSubsidy,
+    nextSubsidy,
   } = calculateHalvingData(state.averageBlockTime, state.lastBlockHeight);
 
   $halvingBlocks.innerText = formatNum(blocksToNextHalving);
   $halvingCountdown.innerHTML = estimatedDuration;
 
   $halvingDate.innerText = formatDate(estimatedDate);
+
+  const progress = formatPercentage(
+    (config.HALVING_EPOCH - blocksToNextHalving) / config.HALVING_EPOCH
+  );
+
+  $halvingProgress.dataset.title = `Subsidy change: ${
+    currentSubsidy / 1e8
+  } BTC >> ${nextSubsidy / 1e8} BTC. Progress: ${progress}`;
 
   state.halvingDate = estimatedDate;
   state.predictedAverageBlockTime = estimatedAverageForCurrentDifficulty;
@@ -140,11 +151,6 @@ function watchMempool() {
       }
 
       if (data.da?.remainingBlocks) {
-        const progress = formatPercentage(
-          (config.DIFFICULTY_EPOCH - data.da.remainingBlocks) /
-            config.DIFFICULTY_EPOCH
-        );
-
         const remainingTime = formatDuration(
           data.da.remainingBlocks * state.predictedAverageBlockTime,
           false
@@ -153,9 +159,7 @@ function watchMempool() {
           data.da.difficultyChange > 0 ? "+" : ""
         }${data.da.difficultyChange.toFixed(2)}%`;
 
-        console.log({ progress });
-
-        $blockTime.dataset.title = `Difficulty adjustment in ${remainingTime} (${progress} complete), predicted change: ${predictedChange}`;
+        $blockTime.dataset.title = `Difficulty adjustment in ${remainingTime}. Predicted change: ${predictedChange}`;
       }
 
       if (

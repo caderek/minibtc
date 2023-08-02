@@ -41,3 +41,6 @@ export const $halvingDate = document.querySelector(
 export const $halvingBlocks = document.querySelector(
   "#halving-blocks"
 ) as HTMLElement;
+export const $halvingProgress = document.querySelector(
+  "#halving-progress"
+) as HTMLElement;
