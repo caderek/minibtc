@@ -61,6 +61,8 @@ function watchPrice() {
             false
           )} | ${formatPercentageChange(state.open24h, price)}`;
 
+          console.log(price);
+
           break;
         }
 
