@@ -77,8 +77,12 @@ function formatDate(date: Date) {
 
   return (
     new Intl.DateTimeFormat(state.lang, {
-      dateStyle: "medium",
-      timeStyle: "short",
+      weekday: "short",
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+      hour: "numeric",
+      minute: "2-digit",
       timeZone,
     }).format(date) + suffix
   );
