@@ -44,7 +44,7 @@ const state: State = {
     price: "usd",
     halving: "gmt",
   },
-  lang: getLang() ?? "en-US",
+  lang: getLang() === "en-US" ? "en-US" : "en-GB",
 };
 
 export default state;
