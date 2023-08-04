@@ -401,6 +401,16 @@ p.last24h {
   }
 }
 
+.chart {
+  background-color: var(--color-bg);
+  position: absolute;
+  top: 3rem;
+  left: 0;
+  width: 100%;
+  height: calc(100% - 3rem);
+  display: none;
+}
+
 @media (max-width: 1279px) {
   .price {
     min-width: auto;

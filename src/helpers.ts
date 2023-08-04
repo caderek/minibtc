@@ -18,3 +18,8 @@ export const getBlocksCount = (blocks: { blockVSize: number }[]) => {
 
   return blocks.length - 1 + last;
 };
+
+export const getLang = () => {
+  if (navigator.languages != undefined) return navigator.languages[0];
+  return navigator.language;
+};

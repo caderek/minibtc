@@ -1,3 +1,5 @@
+import { getLang } from "./helpers";
+
 export type State = {
   prevPrice: number;
   open24h: number;
@@ -19,6 +21,7 @@ export type State = {
     price: "usd" | "sats";
     halving: "gmt" | "local";
   };
+  lang: string;
 };
 
 const state: State = {
@@ -41,6 +44,7 @@ const state: State = {
     price: "usd",
     halving: "gmt",
   },
+  lang: getLang() ?? "en-US",
 };
 
 export default state;

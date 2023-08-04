@@ -72,9 +72,16 @@ if (localStorage.getItem("time") === "local") {
 }
 
 function formatDate(date: Date) {
-  return state.display.halving === "local"
-    ? date.toLocaleString() + " local"
-    : date.toUTCString().slice(0, 22) + " GMT";
+  const timeZone = state.display.halving === "local" ? undefined : "UTC";
+  const suffix = state.display.halving === "gmt" ? " GMT" : " local";
+
+  return (
+    new Intl.DateTimeFormat(state.lang, {
+      dateStyle: "medium",
+      timeStyle: "short",
+      timeZone,
+    }).format(date) + suffix
+  );
 }
 
 $halvingDate.addEventListener("click", () => {
