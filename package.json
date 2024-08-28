@@ -9,8 +9,9 @@
     "preview": "vite preview"
   },
   "devDependencies": {
+    "@biomejs/biome": "^1.8.3",
     "typescript": "^5.0.2",
-    "vite": "^4.3.2"
+    "vite": "^4.5.3"
   },
   "dependencies": {
     "@khmyznikov/pwa-install": "^0.2.1",
